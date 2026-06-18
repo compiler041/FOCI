@@ -3,6 +3,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/authentication/auth.routes";
 import rulesRouter from "./routes/rules/rules.routes";
+import schedulesRouter from './routes/schedule/schedule.route'
+import blockedAppsRouter from './routes/Blockedapp/Blockedapp.route'
+import youtubeRouter from './routes/youtube/youtube.route'
 
 const app = express();
 
@@ -18,8 +21,10 @@ app.use("/api/auth", authRoutes);
 
 app.use('/api/rules', rulesRouter);
 
-app.use('/api/schedules', schedulesRouter)
+app.use('/api/schedules', schedulesRouter);
 
-app.use('/api/blocked-apps', blockedAppsRouter)
+app.use('/api/blocked-apps', blockedAppsRouter);
+
+app.use('/api/youtube-allowlist', youtubeRouter);
 
 export default app;
