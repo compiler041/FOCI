@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Foci</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 320px;
+      min-height: 400px;
+      background: #0f0f0f;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: #ffffff;
+    }
+
+    .header {
+      padding: 20px;
+      border-bottom: 1px solid #1f1f1f;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: #6366f1;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #22c55e;
+    }
+
+    .status-dot.inactive {
+      background: #ef4444;
+    }
+
+    /* NOT LOGGED IN STATE */
+    .not-logged-in {
+      padding: 40px 20px;
+      text-align: center;
+      display: none;
+    }
+
+    .not-logged-in h2 {
+      font-size: 16px;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .not-logged-in p {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    /* LOGGED IN STATE */
+    .logged-in {
+      display: none;
+    }
+
+    .section {
+      padding: 16px 20px;
+      border-bottom: 1px solid #1f1f1f;
+    }
+
+    .section-title {
+      font-size: 11px;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+
+    /* TOGGLE */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .toggle-label {
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .toggle-sub {
+      font-size: 12px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #333;
+      border-radius: 24px;
+      transition: 0.3s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: '';
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+
+    input:checked + .slider {
+      background: #6366f1;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* BLOCKED APPS LIST */
+    .app-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .app-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      background: #1a1a1a;
+      border-radius: 10px;
+    }
+
+    .app-name {
+      font-size: 13px;
+      color: #fff;
+    }
+
+    .app-url {
+      font-size: 11px;
+      color: #888;
+    }
+
+    .app-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 20px;
+      background: rgba(99,102,241,0.15);
+      color: #6366f1;
+    }
+
+    .empty {
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+      padding: 12px 0;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: 0.2s;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #6366f1;
+      color: white;
+    }
+
+    .btn-primary:hover { background: #4f46e5; }
+
+    .btn-ghost {
+      background: transparent;
+      color: #888;
+      border: 1px solid #333;
+      margin-top: 8px;
+    }
+
+    .btn-ghost:hover { color: #fff; border-color: #555; }
+
+    .footer {
+      padding: 16px 20px;
+    }
+
+    /* SYNC STATUS */
+    .sync-status {
+      font-size: 11px;
+      color: #888;
+      text-align: center;
+      padding: 8px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="logo">🎯 FOCI</div>
+    <div class="status-dot" id="statusDot"></div>
+  </div>
+
+  <!-- NOT LOGGED IN -->
+  <div class="not-logged-in" id="notLoggedIn">
+    <h2>Not connected</h2>
+    <p>Log in to Foci to start blocking distracting apps</p>
+    <a href="https://foci.digital" target="_blank" class="btn btn-primary">
+      Open Foci
+    </a>
+  </div>
+
+  <!-- LOGGED IN -->
+  <div class="logged-in" id="loggedIn">
+
+    <div class="section">
+      <div class="section-title">Blocking</div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Block is Active</div>
+          <div class="toggle-sub" id="toggleSub">Protecting you right now</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="blockToggle" checked />
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Blocked Apps</div>
+      <div class="app-list" id="appList">
+        <div class="empty">Loading...</div>
+      </div>
+    </div>
+
+    <div class="sync-status" id="syncStatus">Last synced just now</div>
+
+    <div class="footer">
+      <a href="https://foci.digital" target="_blank" class="btn btn-primary">
+        Open Dashboard
+      </a>
+      <button class="btn btn-ghost" id="syncBtn">Sync Rules Now</button>
+    </div>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
