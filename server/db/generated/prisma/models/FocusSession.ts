@@ -471,6 +471,10 @@ export type FocusSessionUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.FocusSessionScalarWhereInput | Prisma.FocusSessionScalarWhereInput[]
 }
 
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
+}
+
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }

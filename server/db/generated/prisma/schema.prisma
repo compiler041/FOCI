@@ -1,5 +1,5 @@
 generator client {
-provider = "prisma-client-js"
+  provider = "prisma-client-js"
   output   = "../generated/prisma"
 }
 
@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())   
+  id               String             @id @default(uuid())
   oauthAccounts    OAuthAccount[]
   sessions         FocusSession[]
   blockedApps      BlockedApp[]
@@ -16,11 +16,11 @@ model User {
   themes           UserTheme?
   youtubeAllowlist YoutubeAllowlist[]
   achievements     UserAchievement[]
-  schedules        Schedule[]          // ← add this line
+  schedules        Schedule[] // ← add this line
 }
 
 model OAuthAccount {
-  id                String @id @default(uuid())
+  id                String  @id @default(uuid())
   provider          String
   providerAccountId String
   accessToken       String?
@@ -33,17 +33,17 @@ model OAuthAccount {
 }
 
 model FocusSession {
-  id        String    @id @default(uuid())
-  startTime DateTime  @default(now())
+  id        String        @id @default(uuid())
+  startTime DateTime      @default(now())
   endTime   DateTime?
-  duration  Int?      // in seconds
+  duration  Int? // in seconds
   status    SessionStatus @default(ACTIVE)
-  createdAt DateTime  @default(now())
+  createdAt DateTime      @default(now())
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  breaks            Break[]
+  breaks             Break[]
   strictnessOverride Strictness?
 }
 
@@ -62,17 +62,17 @@ model Strictness {
 
   // global → userId set, sessionId null
   // per session → sessionId set (premium only)
-  userId    String?      @unique
-  user      User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  sessionId String?      @unique
+  sessionId String?       @unique
   session   FocusSession? @relation(fields: [sessionId], references: [id], onDelete: Cascade)
 }
 
 model Break {
   id         String   @id @default(uuid())
   takenAt    DateTime @default(now())
-  adDuration Int      // how long the ad was at this break number
+  adDuration Int // how long the ad was at this break number
   skipped    Boolean  @default(false)
 
   sessionId String
@@ -92,21 +92,21 @@ model BlockedApp {
 }
 
 model Theme {
-  id          String  @id @default(uuid())
-  name        String  @unique
+  id          String   @id @default(uuid())
+  name        String   @unique
   description String?
   quoteSet    String[] // array of quotes shown during break
   exerciseSet String[] // array of exercises shown during break
-  isPremiun   Boolean @default(false)
+  isPremiun   Boolean  @default(false)
 
   userThemes UserTheme[]
 }
 
 model UserTheme {
-  id      String @id @default(uuid())
-  
-  userId  String @unique
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id String @id @default(uuid())
+
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   themeId String
   theme   Theme  @relation(fields: [themeId], references: [id])
@@ -127,8 +127,8 @@ model YoutubeAllowlist {
 }
 
 model Achievement {
-  id          String @id @default(uuid())
-  name        String @unique
+  id          String  @id @default(uuid())
+  name        String  @unique
   description String
   condition   String // e.g. "complete_5_sessions", "no_breaks_3_days"
   icon        String?
@@ -140,8 +140,8 @@ model UserAchievement {
   id         String   @id @default(uuid())
   unlockedAt DateTime @default(now())
 
-  userId        String
-  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   achievementId String
   achievement   Achievement @relation(fields: [achievementId], references: [id])
@@ -150,13 +150,13 @@ model UserAchievement {
 }
 
 model Schedule {
-  id         String   @id @default(uuid())
+  id         String  @id @default(uuid())
   label      String
-  startTime  String   
-  endTime    String   
+  startTime  String
+  endTime    String
   daysOfWeek Int[]
-  isActive   Boolean  @default(true)
-  timezone   String   @default("Asia/Kolkata")
-  userId String        
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isActive   Boolean @default(true)
+  timezone   String  @default("Asia/Kolkata")
+  userId     String
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

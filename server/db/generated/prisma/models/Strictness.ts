@@ -486,6 +486,10 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
+}
+
 export type StrictnessCreateWithoutUserInput = {
   id?: string
   maxBreaks?: number

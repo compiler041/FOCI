@@ -387,6 +387,10 @@ export type OAuthAccountUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.OAuthAccountScalarWhereInput | Prisma.OAuthAccountScalarWhereInput[]
 }
 
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
+}
+
 export type OAuthAccountCreateWithoutUserInput = {
   id?: string
   provider: string

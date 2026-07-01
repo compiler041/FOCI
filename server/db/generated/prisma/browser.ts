@@ -72,3 +72,8 @@ export type Achievement = Prisma.AchievementModel
  * 
  */
 export type UserAchievement = Prisma.UserAchievementModel
+/**
+ * Model Schedule
+ * 
+ */
+export type Schedule = Prisma.ScheduleModel

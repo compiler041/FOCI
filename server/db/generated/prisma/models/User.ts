@@ -26,64 +26,28 @@ export type AggregateUser = {
 
 export type UserMinAggregateOutputType = {
   id: string | null
-  email: string | null
-  name: string | null
-  avatar: string | null
-  isPremium: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  email: string | null
-  name: string | null
-  avatar: string | null
-  isPremium: boolean | null
-  createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
   id: number
-  email: number
-  name: number
-  avatar: number
-  isPremium: number
-  createdAt: number
-  updatedAt: number
   _all: number
 }
 
 
 export type UserMinAggregateInputType = {
   id?: true
-  email?: true
-  name?: true
-  avatar?: true
-  isPremium?: true
-  createdAt?: true
-  updatedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
   id?: true
-  email?: true
-  name?: true
-  avatar?: true
-  isPremium?: true
-  createdAt?: true
-  updatedAt?: true
 }
 
 export type UserCountAggregateInputType = {
   id?: true
-  email?: true
-  name?: true
-  avatar?: true
-  isPremium?: true
-  createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -161,12 +125,6 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
-  email: string
-  name: string
-  avatar: string | null
-  isPremium: boolean
-  createdAt: Date
-  updatedAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -192,12 +150,6 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
-  name?: Prisma.StringFilter<"User"> | string
-  avatar?: Prisma.StringNullableFilter<"User"> | string | null
-  isPremium?: Prisma.BoolFilter<"User"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   oauthAccounts?: Prisma.OAuthAccountListRelationFilter
   sessions?: Prisma.FocusSessionListRelationFilter
   blockedApps?: Prisma.BlockedAppListRelationFilter
@@ -205,16 +157,11 @@ export type UserWhereInput = {
   themes?: Prisma.XOR<Prisma.UserThemeNullableScalarRelationFilter, Prisma.UserThemeWhereInput> | null
   youtubeAllowlist?: Prisma.YoutubeAllowlistListRelationFilter
   achievements?: Prisma.UserAchievementListRelationFilter
+  schedules?: Prisma.ScheduleListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPremium?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   oauthAccounts?: Prisma.OAuthAccountOrderByRelationAggregateInput
   sessions?: Prisma.FocusSessionOrderByRelationAggregateInput
   blockedApps?: Prisma.BlockedAppOrderByRelationAggregateInput
@@ -222,19 +169,14 @@ export type UserOrderByWithRelationInput = {
   themes?: Prisma.UserThemeOrderByWithRelationInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistOrderByRelationAggregateInput
   achievements?: Prisma.UserAchievementOrderByRelationAggregateInput
+  schedules?: Prisma.ScheduleOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  name?: Prisma.StringFilter<"User"> | string
-  avatar?: Prisma.StringNullableFilter<"User"> | string | null
-  isPremium?: Prisma.BoolFilter<"User"> | boolean
-  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   oauthAccounts?: Prisma.OAuthAccountListRelationFilter
   sessions?: Prisma.FocusSessionListRelationFilter
   blockedApps?: Prisma.BlockedAppListRelationFilter
@@ -242,16 +184,11 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   themes?: Prisma.XOR<Prisma.UserThemeNullableScalarRelationFilter, Prisma.UserThemeWhereInput> | null
   youtubeAllowlist?: Prisma.YoutubeAllowlistListRelationFilter
   achievements?: Prisma.UserAchievementListRelationFilter
-}, "id" | "email">
+  schedules?: Prisma.ScheduleListRelationFilter
+}, "id">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  avatar?: Prisma.SortOrderInput | Prisma.SortOrder
-  isPremium?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -262,22 +199,10 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
-  name?: Prisma.StringWithAggregatesFilter<"User"> | string
-  avatar?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
-  isPremium?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
@@ -285,16 +210,11 @@ export type UserCreateInput = {
   themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
@@ -302,16 +222,11 @@ export type UserUncheckedCreateInput = {
   themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
@@ -319,16 +234,11 @@ export type UserUpdateInput = {
   themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
@@ -336,66 +246,31 @@ export type UserUncheckedUpdateInput = {
   themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  isPremium?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  isPremium?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
-  name?: Prisma.SortOrder
-  avatar?: Prisma.SortOrder
-  isPremium?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -410,18 +285,6 @@ export type UserNullableScalarRelationFilter = {
 
 export type StringFieldUpdateOperationsInput = {
   set?: string
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type UserCreateNestedOneWithoutOauthAccountsInput = {
@@ -524,36 +387,40 @@ export type UserUpdateOneRequiredWithoutAchievementsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAchievementsInput, Prisma.UserUpdateWithoutAchievementsInput>, Prisma.UserUncheckedUpdateWithoutAchievementsInput>
 }
 
+export type UserCreateNestedOneWithoutSchedulesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSchedulesInput, Prisma.UserUncheckedCreateWithoutSchedulesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSchedulesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSchedulesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSchedulesInput, Prisma.UserUncheckedCreateWithoutSchedulesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSchedulesInput
+  upsert?: Prisma.UserUpsertWithoutSchedulesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSchedulesInput, Prisma.UserUpdateWithoutSchedulesInput>, Prisma.UserUncheckedUpdateWithoutSchedulesInput>
+}
+
 export type UserCreateWithoutOauthAccountsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOauthAccountsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessUncheckedCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOauthAccountsInput = {
@@ -574,66 +441,46 @@ export type UserUpdateToOneWithWhereWithoutOauthAccountsInput = {
 
 export type UserUpdateWithoutOauthAccountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUncheckedUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessUncheckedCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -654,66 +501,46 @@ export type UserUpdateToOneWithWhereWithoutSessionsInput = {
 
 export type UserUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUncheckedUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutStrictnessInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
   themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutStrictnessInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
   themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutStrictnessInput = {
@@ -734,66 +561,46 @@ export type UserUpdateToOneWithWhereWithoutStrictnessInput = {
 
 export type UserUpdateWithoutStrictnessInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
   themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutStrictnessInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
   themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutBlockedAppsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBlockedAppsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessUncheckedCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBlockedAppsInput = {
@@ -814,66 +621,46 @@ export type UserUpdateToOneWithWhereWithoutBlockedAppsInput = {
 
 export type UserUpdateWithoutBlockedAppsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBlockedAppsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUncheckedUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutThemesInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutThemesInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessUncheckedCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutThemesInput = {
@@ -894,66 +681,46 @@ export type UserUpdateToOneWithWhereWithoutThemesInput = {
 
 export type UserUpdateWithoutThemesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutThemesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUncheckedUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutYoutubeAllowlistInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
   achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutYoutubeAllowlistInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessUncheckedCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
   achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutYoutubeAllowlistInput = {
@@ -974,66 +741,46 @@ export type UserUpdateToOneWithWhereWithoutYoutubeAllowlistInput = {
 
 export type UserUpdateWithoutYoutubeAllowlistInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutYoutubeAllowlistInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUncheckedUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
   achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAchievementsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAchievementsInput = {
   id?: string
-  email: string
-  name: string
-  avatar?: string | null
-  isPremium?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
   sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
   blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
   strictness?: Prisma.StrictnessUncheckedCreateNestedOneWithoutUserInput
   themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+  schedules?: Prisma.ScheduleUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAchievementsInput = {
@@ -1054,34 +801,84 @@ export type UserUpdateToOneWithWhereWithoutAchievementsInput = {
 
 export type UserUpdateWithoutAchievementsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAchievementsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isPremium?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
   sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
   blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
   strictness?: Prisma.StrictnessUncheckedUpdateOneWithoutUserNestedInput
   themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
   youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+  schedules?: Prisma.ScheduleUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSchedulesInput = {
+  id?: string
+  oauthAccounts?: Prisma.OAuthAccountCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionCreateNestedManyWithoutUserInput
+  blockedApps?: Prisma.BlockedAppCreateNestedManyWithoutUserInput
+  strictness?: Prisma.StrictnessCreateNestedOneWithoutUserInput
+  themes?: Prisma.UserThemeCreateNestedOneWithoutUserInput
+  youtubeAllowlist?: Prisma.YoutubeAllowlistCreateNestedManyWithoutUserInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSchedulesInput = {
+  id?: string
+  oauthAccounts?: Prisma.OAuthAccountUncheckedCreateNestedManyWithoutUserInput
+  sessions?: Prisma.FocusSessionUncheckedCreateNestedManyWithoutUserInput
+  blockedApps?: Prisma.BlockedAppUncheckedCreateNestedManyWithoutUserInput
+  strictness?: Prisma.StrictnessUncheckedCreateNestedOneWithoutUserInput
+  themes?: Prisma.UserThemeUncheckedCreateNestedOneWithoutUserInput
+  youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSchedulesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSchedulesInput, Prisma.UserUncheckedCreateWithoutSchedulesInput>
+}
+
+export type UserUpsertWithoutSchedulesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSchedulesInput, Prisma.UserUncheckedUpdateWithoutSchedulesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSchedulesInput, Prisma.UserUncheckedCreateWithoutSchedulesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSchedulesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSchedulesInput, Prisma.UserUncheckedUpdateWithoutSchedulesInput>
+}
+
+export type UserUpdateWithoutSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  oauthAccounts?: Prisma.OAuthAccountUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUpdateManyWithoutUserNestedInput
+  blockedApps?: Prisma.BlockedAppUpdateManyWithoutUserNestedInput
+  strictness?: Prisma.StrictnessUpdateOneWithoutUserNestedInput
+  themes?: Prisma.UserThemeUpdateOneWithoutUserNestedInput
+  youtubeAllowlist?: Prisma.YoutubeAllowlistUpdateManyWithoutUserNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSchedulesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  oauthAccounts?: Prisma.OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
+  sessions?: Prisma.FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+  blockedApps?: Prisma.BlockedAppUncheckedUpdateManyWithoutUserNestedInput
+  strictness?: Prisma.StrictnessUncheckedUpdateOneWithoutUserNestedInput
+  themes?: Prisma.UserThemeUncheckedUpdateOneWithoutUserNestedInput
+  youtubeAllowlist?: Prisma.YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1095,6 +892,7 @@ export type UserCountOutputType = {
   blockedApps: number
   youtubeAllowlist: number
   achievements: number
+  schedules: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1103,6 +901,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   blockedApps?: boolean | UserCountOutputTypeCountBlockedAppsArgs
   youtubeAllowlist?: boolean | UserCountOutputTypeCountYoutubeAllowlistArgs
   achievements?: boolean | UserCountOutputTypeCountAchievementsArgs
+  schedules?: boolean | UserCountOutputTypeCountSchedulesArgs
 }
 
 /**
@@ -1150,15 +949,16 @@ export type UserCountOutputTypeCountAchievementsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.UserAchievementWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSchedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ScheduleWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
-  name?: boolean
-  avatar?: boolean
-  isPremium?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
   oauthAccounts?: boolean | Prisma.User$oauthAccountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
   blockedApps?: boolean | Prisma.User$blockedAppsArgs<ExtArgs>
@@ -1166,40 +966,23 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   themes?: boolean | Prisma.User$themesArgs<ExtArgs>
   youtubeAllowlist?: boolean | Prisma.User$youtubeAllowlistArgs<ExtArgs>
   achievements?: boolean | Prisma.User$achievementsArgs<ExtArgs>
+  schedules?: boolean | Prisma.User$schedulesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
-  name?: boolean
-  avatar?: boolean
-  isPremium?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
-  name?: boolean
-  avatar?: boolean
-  isPremium?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
   id?: boolean
-  email?: boolean
-  name?: boolean
-  avatar?: boolean
-  isPremium?: boolean
-  createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name" | "avatar" | "isPremium" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   oauthAccounts?: boolean | Prisma.User$oauthAccountsArgs<ExtArgs>
   sessions?: boolean | Prisma.User$sessionsArgs<ExtArgs>
@@ -1208,6 +991,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   themes?: boolean | Prisma.User$themesArgs<ExtArgs>
   youtubeAllowlist?: boolean | Prisma.User$youtubeAllowlistArgs<ExtArgs>
   achievements?: boolean | Prisma.User$achievementsArgs<ExtArgs>
+  schedules?: boolean | Prisma.User$schedulesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1223,15 +1007,10 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     themes: Prisma.$UserThemePayload<ExtArgs> | null
     youtubeAllowlist: Prisma.$YoutubeAllowlistPayload<ExtArgs>[]
     achievements: Prisma.$UserAchievementPayload<ExtArgs>[]
+    schedules: Prisma.$SchedulePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    email: string
-    name: string
-    avatar: string | null
-    isPremium: boolean
-    createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1633,6 +1412,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   themes<T extends Prisma.User$themesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$themesArgs<ExtArgs>>): Prisma.Prisma__UserThemeClient<runtime.Types.Result.GetResult<Prisma.$UserThemePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   youtubeAllowlist<T extends Prisma.User$youtubeAllowlistArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$youtubeAllowlistArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$YoutubeAllowlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   achievements<T extends Prisma.User$achievementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$achievementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  schedules<T extends Prisma.User$schedulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$schedulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1663,12 +1443,6 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly email: Prisma.FieldRef<"User", 'String'>
-  readonly name: Prisma.FieldRef<"User", 'String'>
-  readonly avatar: Prisma.FieldRef<"User", 'String'>
-  readonly isPremium: Prisma.FieldRef<"User", 'Boolean'>
-  readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 
@@ -1892,7 +1666,7 @@ export type UserCreateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
   /**
    * The data needed to create a User.
    */
-  data: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
+  data?: Prisma.XOR<Prisma.UserCreateInput, Prisma.UserUncheckedCreateInput>
 }
 
 /**
@@ -2217,6 +1991,30 @@ export type User$achievementsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.UserAchievementScalarFieldEnum | Prisma.UserAchievementScalarFieldEnum[]
+}
+
+/**
+ * User.schedules
+ */
+export type User$schedulesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Schedule
+   */
+  select?: Prisma.ScheduleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Schedule
+   */
+  omit?: Prisma.ScheduleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ScheduleInclude<ExtArgs> | null
+  where?: Prisma.ScheduleWhereInput
+  orderBy?: Prisma.ScheduleOrderByWithRelationInput | Prisma.ScheduleOrderByWithRelationInput[]
+  cursor?: Prisma.ScheduleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ScheduleScalarFieldEnum | Prisma.ScheduleScalarFieldEnum[]
 }
 
 /**

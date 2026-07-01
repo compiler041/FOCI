@@ -61,7 +61,8 @@ export const ModelName = {
   UserTheme: 'UserTheme',
   YoutubeAllowlist: 'YoutubeAllowlist',
   Achievement: 'Achievement',
-  UserAchievement: 'UserAchievement'
+  UserAchievement: 'UserAchievement',
+  Schedule: 'Schedule'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -81,13 +82,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 
 
 export const UserScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  name: 'name',
-  avatar: 'avatar',
-  isPremium: 'isPremium',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  id: 'id'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -206,6 +201,20 @@ export const UserAchievementScalarFieldEnum = {
 } as const
 
 export type UserAchievementScalarFieldEnum = (typeof UserAchievementScalarFieldEnum)[keyof typeof UserAchievementScalarFieldEnum]
+
+
+export const ScheduleScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  daysOfWeek: 'daysOfWeek',
+  isActive: 'isActive',
+  timezone: 'timezone',
+  userId: 'userId'
+} as const
+
+export type ScheduleScalarFieldEnum = (typeof ScheduleScalarFieldEnum)[keyof typeof ScheduleScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -1,16 +1,18 @@
-import path from "path";
-
-const clientPath = path.resolve(__dirname, "../../../db/generated/prisma/client");
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const { PrismaClient } = require(clientPath);
+const { PrismaClient } = require('../../db/generated/prisma')
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: InstanceType<typeof PrismaClient> | undefined;
-};
+  prisma: any | undefined
+}
 
 export const prisma =
-  globalForPrisma.prisma ?? new PrismaClient();
+  globalForPrisma.prisma ?? new PrismaClient({
+    datasource: {
+      db: {
+        url: process.env.DATABASE_URL
+      }
+    }
+  })
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== 'production') {
+  globalForPrisma.prisma = prisma
 }
