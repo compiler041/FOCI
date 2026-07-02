@@ -21,7 +21,19 @@ async function checkCurrentPage() {
 // 2. SHOW BLOCK SCREEN
 // ============================================
 function showBlockScreen(reason) {
-  // prevent page from loading
+  // --- KILL ALL AUDIO/VIDEO BEFORE WIPING DOM ---
+  // YouTube's player keeps audio running even after innerHTML is cleared
+  // because the JS audio context lives outside the DOM.
+  try {
+    document.querySelectorAll('video, audio').forEach(media => {
+      media.pause()
+      media.muted = true
+      media.src = ''       // detach the source so the browser drops the stream
+      media.load()         // force the element to reset
+    })
+  } catch (e) { /* ignore — page may not have loaded media yet */ }
+
+  // Wipe the page
   document.documentElement.innerHTML = ''
 
   // create block overlay
@@ -149,6 +161,13 @@ const observer = new MutationObserver(() => {
   const currentUrl = window.location.href
   if (currentUrl !== lastUrl) {
     lastUrl = currentUrl
+    // Proactively mute any playing media immediately on navigation,
+    // before the async block check resolves, to prevent audio bleed.
+    try {
+      document.querySelectorAll('video, audio').forEach(media => {
+        media.muted = true
+      })
+    } catch (e) {}
     checkCurrentPage()
   }
 })
