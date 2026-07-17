@@ -1,0 +1,164 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.dash-title {
+  font-size: 38px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* Main 2-col grid */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dash-left, .dash-right {
+  display: flex;
+  flex-direction: column;
+}
+
+.dash-right {
+  gap: 16px;
+}
+
+/* Card titles */
+.dash-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-sub);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+
+/* Donut */
+.dash-core-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 24px;
+}
+
+.dash-donut-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash-legend {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.dash-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+.dash-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Weekly bar chart */
+.dash-weekly-card {
+  padding: 32px 24px;
+}
+
+.dash-weekly-card .dash-card-title {
+  text-align: left;
+}
+
+.dash-bar-chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 200px;
+  gap: 16px;
+}
+
+.dash-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+}
+
+.dash-bar-track {
+  flex: 1;
+  width: 100%;
+  max-width: 48px;
+  background: #1a1a24;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.dash-bar-fill {
+  width: 100%;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #e6c27a 0%, #d4af37 100%);
+  transition: height 0.6s ease;
+  min-height: 4px;
+}
+
+.dash-bar-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Recent sessions */
+.dash-recent-card {
+  padding: 32px 24px;
+}
+
+.dash-recent-card .dash-card-title {
+  text-align: left;
+}
+
+.dash-session-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dash-session-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.dash-session-row:last-child {
+  border-bottom: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dash-grid {
+    grid-template-columns: 1fr;
+  }
+}

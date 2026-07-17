@@ -121,7 +121,13 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 });
 
 exports.Prisma.UserScalarFieldEnum = {
-  id: 'id'
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  password: 'password',
+  avatar: 'avatar',
+  isPremium: 'isPremium',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.OAuthAccountScalarFieldEnum = {

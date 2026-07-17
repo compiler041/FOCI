@@ -8,7 +8,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())   
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String   @default("User")
+  password  String?  // null for OAuth-only users
+  avatar    String?
+  isPremium Boolean  @default(false)
+  createdAt DateTime @default(now())
+
   oauthAccounts    OAuthAccount[]
   sessions         FocusSession[]
   blockedApps      BlockedApp[]
@@ -16,7 +23,7 @@ model User {
   themes           UserTheme?
   youtubeAllowlist YoutubeAllowlist[]
   achievements     UserAchievement[]
-  schedules        Schedule[]          // ← add this line
+  schedules        Schedule[]
 }
 
 model OAuthAccount {
