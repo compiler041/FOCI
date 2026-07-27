@@ -7,20 +7,28 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
+  function fetchUser() {
+    setLoading(true)
     const token = localStorage.getItem('foci_token')
     if (!token) {
       setLoading(false)
-      return
+      return Promise.resolve(null)
     }
-    // Verify token is still valid by hitting a protected endpoint
-    client.get('/api/auth/me')
-      .then(res => setUser(res.data.user))
+    return client.get('/api/auth/me')
+      .then(res => {
+        setUser(res.data.user)
+        return res.data.user
+      })
       .catch(() => {
         localStorage.removeItem('foci_token')
         setUser(null)
+        return null
       })
       .finally(() => setLoading(false))
+  }
+
+  useEffect(() => {
+    fetchUser()
   }, [])
 
   function logout() {
@@ -42,7 +50,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, logout, setToken }}>
+    <AuthContext.Provider value={{ user, loading, logout, setToken, fetchUser }}>
       {children}
     </AuthContext.Provider>
   )

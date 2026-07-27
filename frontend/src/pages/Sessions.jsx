@@ -44,6 +44,37 @@ export default function Sessions() {
   const h = Math.floor(totalTime / 3600)
   const m = Math.floor((totalTime % 3600) / 60)
 
+  // Calculate daily scores for last 7 days
+  const last7Days = Array.from({ length: 7 }).map((_, i) => {
+    const d = new Date()
+    d.setDate(d.getDate() - (6 - i))
+    d.setHours(0,0,0,0)
+    return d
+  })
+
+  const dailyScores = last7Days.map(date => {
+    const nextDate = new Date(date)
+    nextDate.setDate(nextDate.getDate() + 1)
+    
+    const daySessions = sessions.filter(s => new Date(s.startTime) >= date && new Date(s.startTime) < nextDate)
+    
+    const focusSeconds = daySessions.filter(s => s.status === 'COMPLETED').reduce((acc, s) => acc + (s.duration || 0), 0)
+    const focusHours = (focusSeconds / 3600)
+    const breaks = daySessions.reduce((acc, s) => acc + (s.breaks?.length || 0), 0)
+    
+    const score = focusHours / Math.max(breaks, 1)
+    
+    return {
+      date,
+      dayName: date.toLocaleDateString('en-IN', { weekday: 'short' }),
+      focusHours,
+      breaks,
+      score: parseFloat(score.toFixed(1))
+    }
+  }).reverse()
+
+  const maxScore = Math.max(...dailyScores.map(d => d.score), 1)
+
   return (
     <div className="fade-up">
       <PageHeader title="Sessions" subtitle="Your focus history" />
@@ -78,7 +109,27 @@ export default function Sessions() {
           <p>Start your first focus session from the Dashboard</p>
         </div>
       ) : (
-        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+        <>
+          <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Daily Focus Scores (Last 7 Days)</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 32 }}>
+            {dailyScores.map((day, i) => (
+              <div key={i} className="card" style={{ display: 'flex', alignItems: 'center', padding: '16px 20px' }}>
+                <div style={{ width: 60, fontWeight: 700 }}>{day.dayName}</div>
+                <div style={{ flex: 1, padding: '0 16px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--text-sub)', marginBottom: 6 }}>
+                    <span>{formatDuration(day.focusHours * 3600)} Focus · {day.breaks} Breaks</span>
+                    <span style={{ color: 'var(--gold)', fontWeight: 700 }}>{day.score} Score</span>
+                  </div>
+                  <div style={{ height: 6, background: 'var(--surface)', borderRadius: 3, overflow: 'hidden' }}>
+                    <div style={{ height: '100%', background: 'var(--gold)', width: `${(day.score / maxScore) * 100}%`, borderRadius: 3 }} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <h3 style={{ fontSize: 16, fontWeight: 600, marginBottom: 16 }}>Recent Sessions</h3>
+          <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid var(--border)' }}>
@@ -102,6 +153,7 @@ export default function Sessions() {
             </tbody>
           </table>
         </div>
+        </>
       )}
     </div>
   )

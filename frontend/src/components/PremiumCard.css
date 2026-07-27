@@ -1,0 +1,113 @@
+.premium-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 40px;
+  margin-top: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  border-radius: var(--radius);
+  padding: 2px;
+  background: linear-gradient(135deg, var(--gold), rgba(230, 194, 122, 0.1), var(--gold-dim));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.premium-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(230, 194, 122, 0.15);
+}
+
+.premium-card-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.premium-icon-wrapper {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  background: var(--gold-glow);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+}
+
+.premium-sparkle {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  color: var(--text);
+  animation: pulse 2s infinite;
+}
+
+.premium-card-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.premium-price {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--gold);
+}
+
+.premium-price span {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.premium-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.premium-benefit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--text-sub);
+  font-size: 15px;
+}
+
+.premium-benefit svg {
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+.premium-cta {
+  width: 100%;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: var(--bg);
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px var(--gold-glow);
+}
+
+.premium-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--gold-glow);
+  filter: brightness(1.1);
+}

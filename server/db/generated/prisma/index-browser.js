@@ -127,7 +127,9 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   avatar: 'avatar',
   isPremium: 'isPremium',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  strictnessLevel: 'strictnessLevel',
+  totalFocusSeconds: 'totalFocusSeconds'
 };
 
 exports.Prisma.OAuthAccountScalarFieldEnum = {

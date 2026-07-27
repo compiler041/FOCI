@@ -8,13 +8,15 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String   @default("User")
-  password  String? // null for OAuth-only users
-  avatar    String?
-  isPremium Boolean  @default(false)
-  createdAt DateTime @default(now())
+  id                String   @id @default(uuid())
+  email             String   @unique
+  name              String   @default("User")
+  password          String? // null for OAuth-only users
+  avatar            String?
+  isPremium         Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  strictnessLevel   Int      @default(1)
+  totalFocusSeconds Int      @default(0)
 
   oauthAccounts    OAuthAccount[]
   sessions         FocusSession[]

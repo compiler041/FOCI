@@ -2059,8 +2059,20 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    strictnessLevel: number | null
+    totalFocusSeconds: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    strictnessLevel: number | null
+    totalFocusSeconds: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -2071,6 +2083,8 @@ export namespace Prisma {
     avatar: string | null
     isPremium: boolean | null
     createdAt: Date | null
+    strictnessLevel: number | null
+    totalFocusSeconds: number | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -2081,6 +2095,8 @@ export namespace Prisma {
     avatar: string | null
     isPremium: boolean | null
     createdAt: Date | null
+    strictnessLevel: number | null
+    totalFocusSeconds: number | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -2091,9 +2107,21 @@ export namespace Prisma {
     avatar: number
     isPremium: number
     createdAt: number
+    strictnessLevel: number
+    totalFocusSeconds: number
     _all: number
   }
 
+
+  export type UserAvgAggregateInputType = {
+    strictnessLevel?: true
+    totalFocusSeconds?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    strictnessLevel?: true
+    totalFocusSeconds?: true
+  }
 
   export type UserMinAggregateInputType = {
     id?: true
@@ -2103,6 +2131,8 @@ export namespace Prisma {
     avatar?: true
     isPremium?: true
     createdAt?: true
+    strictnessLevel?: true
+    totalFocusSeconds?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -2113,6 +2143,8 @@ export namespace Prisma {
     avatar?: true
     isPremium?: true
     createdAt?: true
+    strictnessLevel?: true
+    totalFocusSeconds?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -2123,6 +2155,8 @@ export namespace Prisma {
     avatar?: true
     isPremium?: true
     createdAt?: true
+    strictnessLevel?: true
+    totalFocusSeconds?: true
     _all?: true
   }
 
@@ -2164,6 +2198,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -2194,6 +2240,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -2206,7 +2254,11 @@ export namespace Prisma {
     avatar: string | null
     isPremium: boolean
     createdAt: Date
+    strictnessLevel: number
+    totalFocusSeconds: number
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -2233,6 +2285,8 @@ export namespace Prisma {
     avatar?: boolean
     isPremium?: boolean
     createdAt?: boolean
+    strictnessLevel?: boolean
+    totalFocusSeconds?: boolean
     oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     blockedApps?: boolean | User$blockedAppsArgs<ExtArgs>
@@ -2252,6 +2306,8 @@ export namespace Prisma {
     avatar?: boolean
     isPremium?: boolean
     createdAt?: boolean
+    strictnessLevel?: boolean
+    totalFocusSeconds?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2262,6 +2318,8 @@ export namespace Prisma {
     avatar?: boolean
     isPremium?: boolean
     createdAt?: boolean
+    strictnessLevel?: boolean
+    totalFocusSeconds?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -2272,9 +2330,11 @@ export namespace Prisma {
     avatar?: boolean
     isPremium?: boolean
     createdAt?: boolean
+    strictnessLevel?: boolean
+    totalFocusSeconds?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "avatar" | "isPremium" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "password" | "avatar" | "isPremium" | "createdAt" | "strictnessLevel" | "totalFocusSeconds", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
@@ -2309,6 +2369,8 @@ export namespace Prisma {
       avatar: string | null
       isPremium: boolean
       createdAt: Date
+      strictnessLevel: number
+      totalFocusSeconds: number
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -2747,6 +2809,8 @@ export namespace Prisma {
     readonly avatar: FieldRef<"User", 'String'>
     readonly isPremium: FieldRef<"User", 'Boolean'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly strictnessLevel: FieldRef<"User", 'Int'>
+    readonly totalFocusSeconds: FieldRef<"User", 'Int'>
   }
     
 
@@ -15429,7 +15493,9 @@ export namespace Prisma {
     password: 'password',
     avatar: 'avatar',
     isPremium: 'isPremium',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    strictnessLevel: 'strictnessLevel',
+    totalFocusSeconds: 'totalFocusSeconds'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -15684,6 +15750,8 @@ export namespace Prisma {
     avatar?: StringNullableFilter<"User"> | string | null
     isPremium?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
+    strictnessLevel?: IntFilter<"User"> | number
+    totalFocusSeconds?: IntFilter<"User"> | number
     oauthAccounts?: OAuthAccountListRelationFilter
     sessions?: FocusSessionListRelationFilter
     blockedApps?: BlockedAppListRelationFilter
@@ -15702,6 +15770,8 @@ export namespace Prisma {
     avatar?: SortOrderInput | SortOrder
     isPremium?: SortOrder
     createdAt?: SortOrder
+    strictnessLevel?: SortOrder
+    totalFocusSeconds?: SortOrder
     oauthAccounts?: OAuthAccountOrderByRelationAggregateInput
     sessions?: FocusSessionOrderByRelationAggregateInput
     blockedApps?: BlockedAppOrderByRelationAggregateInput
@@ -15723,6 +15793,8 @@ export namespace Prisma {
     avatar?: StringNullableFilter<"User"> | string | null
     isPremium?: BoolFilter<"User"> | boolean
     createdAt?: DateTimeFilter<"User"> | Date | string
+    strictnessLevel?: IntFilter<"User"> | number
+    totalFocusSeconds?: IntFilter<"User"> | number
     oauthAccounts?: OAuthAccountListRelationFilter
     sessions?: FocusSessionListRelationFilter
     blockedApps?: BlockedAppListRelationFilter
@@ -15741,9 +15813,13 @@ export namespace Prisma {
     avatar?: SortOrderInput | SortOrder
     isPremium?: SortOrder
     createdAt?: SortOrder
+    strictnessLevel?: SortOrder
+    totalFocusSeconds?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -15757,6 +15833,8 @@ export namespace Prisma {
     avatar?: StringNullableWithAggregatesFilter<"User"> | string | null
     isPremium?: BoolWithAggregatesFilter<"User"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    strictnessLevel?: IntWithAggregatesFilter<"User"> | number
+    totalFocusSeconds?: IntWithAggregatesFilter<"User"> | number
   }
 
   export type OAuthAccountWhereInput = {
@@ -16439,6 +16517,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
@@ -16457,6 +16537,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
@@ -16475,6 +16557,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
@@ -16493,6 +16577,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
@@ -16511,6 +16597,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
   }
 
   export type UserUpdateManyMutationInput = {
@@ -16521,6 +16609,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -16531,6 +16621,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
   }
 
   export type OAuthAccountCreateInput = {
@@ -17255,6 +17347,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type OAuthAccountListRelationFilter = {
     every?: OAuthAccountWhereInput
     some?: OAuthAccountWhereInput
@@ -17338,6 +17441,13 @@ export namespace Prisma {
     avatar?: SortOrder
     isPremium?: SortOrder
     createdAt?: SortOrder
+    strictnessLevel?: SortOrder
+    totalFocusSeconds?: SortOrder
+  }
+
+  export type UserAvgOrderByAggregateInput = {
+    strictnessLevel?: SortOrder
+    totalFocusSeconds?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -17348,6 +17458,8 @@ export namespace Prisma {
     avatar?: SortOrder
     isPremium?: SortOrder
     createdAt?: SortOrder
+    strictnessLevel?: SortOrder
+    totalFocusSeconds?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -17358,6 +17470,13 @@ export namespace Prisma {
     avatar?: SortOrder
     isPremium?: SortOrder
     createdAt?: SortOrder
+    strictnessLevel?: SortOrder
+    totalFocusSeconds?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    strictnessLevel?: SortOrder
+    totalFocusSeconds?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -17416,6 +17535,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -17572,17 +17707,6 @@ export namespace Prisma {
     _max?: NestedEnumSessionStatusFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -17633,22 +17757,6 @@ export namespace Prisma {
     maxBreaks?: SortOrder
     baseAdDuration?: SortOrder
     adIncreasePerBreak?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type FocusSessionScalarRelationFilter = {
@@ -18042,6 +18150,14 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type OAuthAccountUpdateManyWithoutUserNestedInput = {
     create?: XOR<OAuthAccountCreateWithoutUserInput, OAuthAccountUncheckedCreateWithoutUserInput> | OAuthAccountCreateWithoutUserInput[] | OAuthAccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: OAuthAccountCreateOrConnectWithoutUserInput | OAuthAccountCreateOrConnectWithoutUserInput[]
@@ -18380,14 +18496,6 @@ export namespace Prisma {
     connect?: FocusSessionWhereUniqueInput
   }
 
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
-  }
-
   export type UserUpdateOneWithoutStrictnessNestedInput = {
     create?: XOR<UserCreateWithoutStrictnessInput, UserUncheckedCreateWithoutStrictnessInput>
     connectOrCreate?: UserCreateOrConnectWithoutStrictnessInput
@@ -18675,6 +18783,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -18690,17 +18809,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18751,6 +18859,33 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -18820,33 +18955,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumSessionStatusFilter<$PrismaModel>
     _max?: NestedEnumSessionStatusFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type OAuthAccountCreateWithoutUserInput = {
@@ -19276,6 +19384,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
@@ -19293,6 +19403,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
@@ -19326,6 +19438,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
@@ -19343,6 +19457,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
@@ -19360,6 +19476,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
@@ -19377,6 +19495,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
@@ -19457,6 +19577,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
@@ -19474,6 +19596,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
@@ -19547,6 +19671,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
@@ -19564,6 +19690,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
@@ -19624,6 +19752,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
@@ -19641,6 +19771,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
@@ -19751,6 +19883,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
@@ -19768,6 +19902,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
@@ -19801,6 +19937,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
@@ -19818,6 +19956,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
@@ -19880,6 +20020,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
@@ -19897,6 +20039,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
@@ -19953,6 +20097,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
@@ -19970,6 +20116,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
@@ -20016,6 +20164,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
@@ -20033,6 +20183,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
@@ -20066,6 +20218,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
@@ -20083,6 +20237,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
@@ -20138,6 +20294,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
@@ -20155,6 +20313,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
@@ -20209,6 +20369,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
@@ -20226,6 +20388,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
@@ -20270,6 +20434,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
@@ -20287,6 +20453,8 @@ export namespace Prisma {
     avatar?: string | null
     isPremium?: boolean
     createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
@@ -20320,6 +20488,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
@@ -20337,6 +20507,8 @@ export namespace Prisma {
     avatar?: NullableStringFieldUpdateOperationsInput | string | null
     isPremium?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput

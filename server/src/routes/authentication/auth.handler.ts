@@ -60,6 +60,7 @@ export const signup = async (req: Request, res: Response) => {
         name: user.name,
         avatar: user.avatar,
         isPremium: user.isPremium,
+        schedules: [],
       },
       token,
     });
@@ -79,7 +80,10 @@ export const login = async (req: Request, res: Response) => {
       return;
     }
 
-    const user = await prisma.user.findUnique({ where: { email } });
+    const user = await prisma.user.findUnique({ 
+      where: { email },
+      include: { schedules: { select: { id: true } } }
+    });
     if (!user) {
       res.status(401).json({ error: "Invalid email or password" });
       return;
@@ -119,6 +123,7 @@ export const login = async (req: Request, res: Response) => {
         name: user.name,
         avatar: user.avatar,
         isPremium: user.isPremium,
+        schedules: user.schedules,
       },
       token,
     });
@@ -148,7 +153,10 @@ export const googleLogin = async (req: Request, res: Response) => {
     const { email, name, picture, sub: googleId } = payload;
 
     // find or create user
-    let user = await prisma.user.findUnique({ where: { email } });
+    let user = await prisma.user.findUnique({ 
+      where: { email },
+      include: { schedules: { select: { id: true } } }
+    });
 
     if (!user) {
       user = await prisma.user.create({
@@ -163,6 +171,7 @@ export const googleLogin = async (req: Request, res: Response) => {
             },
           },
         },
+        include: { schedules: { select: { id: true } } }
       });
     } else {
       // check if oauth account exists, if not create it
@@ -206,6 +215,7 @@ export const googleLogin = async (req: Request, res: Response) => {
         name: user.name,
         avatar: user.avatar,
         isPremium: user.isPremium,
+        schedules: user.schedules,
       },
       token,
     });
@@ -233,6 +243,7 @@ export const getMe = async (req: Request, res: Response) => {
         avatar: true,
         isPremium: true,
         createdAt: true,
+        schedules: { select: { id: true } },
       },
     });
     res.json({ user });

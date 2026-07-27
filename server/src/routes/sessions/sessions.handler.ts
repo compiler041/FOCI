@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { prisma } from '../../lib/prisma'
+import { checkAndUnlockAchievements } from '../achievements/achievements.seed'
 
 export const startSession = async (req: Request, res: Response) => {
   try {
@@ -65,7 +66,19 @@ export const endSession = async (req: Request, res: Response) => {
       }
     })
 
-    res.json({ session: updated })
+    await prisma.user.update({
+      where: { id: userId },
+      data: {
+        totalFocusSeconds: {
+          increment: duration
+        }
+      }
+    })
+
+    // Check for newly unlocked achievements
+    const newAchievements = await checkAndUnlockAchievements(userId)
+
+    res.json({ session: updated, newAchievements })
 
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' })
@@ -86,14 +99,25 @@ export const takeBreak = async (req: Request, res: Response) => {
     if (session.userId !== userId) return res.status(403).json({ message: 'Unauthorized' })
     if (session.status !== 'ACTIVE') return res.status(400).json({ message: 'Session is not active' })
 
-    const strictness = await prisma.strictness.findUnique({
-      where: { userId }
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { strictnessLevel: true }
     })
 
-    const baseAd = strictness?.baseAdDuration ?? 30
-    const adIncrease = strictness?.adIncreasePerBreak ?? 10
+    const strictnessLevel = user?.strictnessLevel ?? 1
     const breakCount = session.breaks.length
-    const adDuration = baseAd + (breakCount * adIncrease)
+    
+    let adDuration = 15;
+    if (strictnessLevel === 1) {
+      adDuration = 15;
+    } else if (strictnessLevel === 2) {
+      adDuration = Math.min(15 + breakCount * 15, 60);
+    } else if (strictnessLevel === 3) {
+      if (breakCount === 0) adDuration = 15;
+      else if (breakCount === 1) adDuration = 30;
+      else if (breakCount === 2) adDuration = 60;
+      else adDuration = 300;
+    }
 
     const newBreak = await prisma.break.create({
       data: {
@@ -118,6 +142,23 @@ export const getSessionHistory = async (req: Request, res: Response) => {
         userId,
         status: { not: 'ACTIVE' }
       },
+      include: { breaks: true },
+      orderBy: { createdAt: 'desc' }
+    })
+
+    res.json({ sessions })
+
+  } catch (error) {
+    res.status(500).json({ message: 'Something went wrong' })
+  }
+}
+
+export const getAllSessions = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user.id
+
+    const sessions = await prisma.focusSession.findMany({
+      where: { userId },
       include: { breaks: true },
       orderBy: { createdAt: 'desc' }
     })
