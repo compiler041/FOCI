@@ -1,183 +1,162 @@
 // ============================================
-// 1. CHECK CURRENT PAGE ON LOAD
+// FOCI CONTENT SCRIPT — SELF-CONTAINED BLOCKER
 // ============================================
-async function checkCurrentPage() {
+
+const FOCI_ORIGINS = ['localhost:5173', 'foci.digital']
+
+// 1. TOKEN BRIDGE
+function tryBridgeToken() {
+  if (!FOCI_ORIGINS.some(o => window.location.host.includes(o))) return
+  const token = localStorage.getItem('foci_token')
+  if (token) {
+    chrome.runtime.sendMessage({ type: 'SET_TOKEN', token }).catch(() => {})
+  }
+}
+tryBridgeToken()
+setInterval(tryBridgeToken, 3000)
+
+window.addEventListener('storage', (e) => {
+  if (e.key === 'foci_token') {
+    if (e.newValue) chrome.runtime.sendMessage({ type: 'SET_TOKEN', token: e.newValue }).catch(() => {})
+    else chrome.runtime.sendMessage({ type: 'CLEAR_TOKEN' }).catch(() => {})
+  }
+})
+
+// 2. MAIN BLOCKER
+async function checkAndBlock() {
   const url = window.location.href
 
-  // skip extension pages and chrome pages
-  if (url.startsWith('chrome://') || url.startsWith('chrome-extension://')) return
+  // Skip internal pages and Foci app
+  if (url.startsWith('chrome') || url.startsWith('about:') || url.startsWith('edge:')) return
+  if (FOCI_ORIGINS.some(o => url.includes(o))) return
 
-  const response = await chrome.runtime.sendMessage({
-    type: 'CHECK_URL',
-    url: url
+  let data
+  try {
+    data = await new Promise((resolve, reject) => {
+      chrome.storage.local.get(
+        ['blockedApps', 'youtubeAllowlist', 'blockingEnabled'],
+        (result) => {
+          if (chrome.runtime.lastError) reject(chrome.runtime.lastError)
+          else resolve(result)
+        }
+      )
+    })
+  } catch (e) {
+    return
+  }
+
+  // If user toggled off "Block Distractions" in popup, don't block
+  if (data.blockingEnabled === false) {
+    return
+  }
+
+  if (!data.blockedApps || data.blockedApps.length === 0) {
+    return
+  }
+
+  // Match URL
+  let hostname
+  try {
+    hostname = new URL(url).hostname.replace('www.', '').toLowerCase()
+  } catch (e) { return }
+
+  const matchedApp = data.blockedApps.find(app => {
+    if (!app.browserUrl) return false
+    const h = app.browserUrl.replace('www.', '').replace('https://', '').replace('http://', '').toLowerCase().trim()
+    return hostname === h || hostname.endsWith('.' + h)
   })
 
-  if (response?.blocked) {
-    showBlockScreen(response.reason)
+  if (!matchedApp) {
+    return
   }
-}
 
-// ============================================
-// 2. SHOW BLOCK SCREEN
-// ============================================
-function showBlockScreen(reason) {
-  // --- KILL ALL AUDIO/VIDEO BEFORE WIPING DOM ---
-  // YouTube's player keeps audio running even after innerHTML is cleared
-  // because the JS audio context lives outside the DOM.
-  try {
-    document.querySelectorAll('video, audio').forEach(media => {
-      media.pause()
-      media.muted = true
-      media.src = ''       // detach the source so the browser drops the stream
-      media.load()         // force the element to reset
-    })
-  } catch (e) { /* ignore — page may not have loaded media yet */ }
-
-  // Wipe the page
-  document.documentElement.innerHTML = ''
-
-  // create block overlay
-  const overlay = document.createElement('div')
-  overlay.id = 'foci-block-screen'
-  overlay.innerHTML = `
-    <div class="foci-container">
-      <div class="foci-logo">🎯 Foci</div>
-      <div class="foci-icon">🔒</div>
-      <h1 class="foci-title">This site is blocked</h1>
-      <p class="foci-reason">${reason}</p>
-      <p class="foci-message">You blocked this to stay focused.<br/>Keep going — you're doing great.</p>
-      <button class="foci-btn" onclick="history.back()">Go Back</button>
-      <a class="foci-link" href="https://foci.digital" target="_blank">
-        Open Foci Dashboard
-      </a>
-    </div>
-  `
-
-  // inject styles
-  const style = document.createElement('style')
-  style.textContent = `
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    #foci-block-screen {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: #0f0f0f;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 999999;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-
-    .foci-container {
-      text-align: center;
-      padding: 48px;
-      max-width: 480px;
-    }
-
-    .foci-logo {
-      font-size: 18px;
-      font-weight: 700;
-      color: #888;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 32px;
-    }
-
-    .foci-icon {
-      font-size: 64px;
-      margin-bottom: 24px;
-    }
-
-    .foci-title {
-      font-size: 28px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 12px;
-    }
-
-    .foci-reason {
-      font-size: 14px;
-      color: #6366f1;
-      background: rgba(99, 102, 241, 0.1);
-      padding: 8px 16px;
-      border-radius: 20px;
-      display: inline-block;
-      margin-bottom: 20px;
-    }
-
-    .foci-message {
-      font-size: 15px;
-      color: #888;
-      line-height: 1.6;
-      margin-bottom: 36px;
-    }
-
-    .foci-btn {
-      display: block;
-      width: 100%;
-      padding: 14px;
-      background: #6366f1;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 16px;
-      transition: background 0.2s;
-    }
-
-    .foci-btn:hover {
-      background: #4f46e5;
-    }
-
-    .foci-link {
-      display: block;
-      color: #888;
-      font-size: 13px;
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .foci-link:hover {
-      color: #fff;
-    }
-  `
-
-  document.head.appendChild(style)
-  document.body.appendChild(overlay)
-}
-
-// ============================================
-// 3. WATCH FOR URL CHANGES (SPA support)
-// YouTube is a single page app — URL changes
-// without page reload so we need to watch it
-// ============================================
-let lastUrl = window.location.href
-
-const observer = new MutationObserver(() => {
-  const currentUrl = window.location.href
-  if (currentUrl !== lastUrl) {
-    lastUrl = currentUrl
-    // Proactively mute any playing media immediately on navigation,
-    // before the async block check resolves, to prevent audio bleed.
+  // YouTube allowlist
+  if (hostname.includes('youtube.com')) {
     try {
-      document.querySelectorAll('video, audio').forEach(media => {
-        media.muted = true
-      })
+      const vid = new URL(url).searchParams.get('v')
+      if (vid && data.youtubeAllowlist?.some(v => v.videoId === vid)) {
+        return
+      }
     } catch (e) {}
-    checkCurrentPage()
   }
-})
 
-observer.observe(document.documentElement, {
-  subtree: true,
-  childList: true
-})
+  showBlockScreen(matchedApp.appName + ' is blocked')
+}
 
-// ============================================
-// 4. RUN ON PAGE LOAD
-// ============================================
-checkCurrentPage()
+// 3. BLOCK SCREEN
+function showBlockScreen(reason) {
+  try {
+    document.querySelectorAll('video, audio').forEach(m => {
+      m.pause(); m.muted = true; m.src = ''; m.load()
+    })
+  } catch (e) {}
+
+  window.stop()
+
+  // Use document.open/write/close — most reliable way to replace page
+  document.open()
+  document.write(`<!DOCTYPE html>
+<html>
+<head>
+  <title>Blocked by Foci</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0c;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: white;
+    }
+    .fc { text-align: center; padding: 48px; max-width: 480px; }
+    .fc-logo { font-size: 16px; font-weight: 800; color: #e6c27a; letter-spacing: 3px; margin-bottom: 40px; }
+    .fc-icon { font-size: 64px; margin-bottom: 24px; }
+    .fc-title { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 16px; }
+    .fc-reason {
+      font-size: 14px; color: #e6c27a;
+      background: rgba(230,194,122,0.1); border: 1px solid rgba(230,194,122,0.2);
+      padding: 8px 20px; border-radius: 20px;
+      display: inline-block; margin-bottom: 24px; font-weight: 600;
+    }
+    .fc-msg { font-size: 15px; color: #9ca3af; line-height: 1.7; margin-bottom: 40px; }
+    .fc-btn {
+      display: block; width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #e6c27a, #d4af37);
+      color: #000; border: none; border-radius: 12px;
+      font-size: 15px; font-weight: 700; cursor: pointer; margin-bottom: 16px;
+    }
+    .fc-link { color: #9ca3af; font-size: 13px; text-decoration: none; }
+    .fc-link:hover { color: #e6c27a; }
+  </style>
+</head>
+<body>
+  <div class="fc">
+    <div class="fc-logo">🎯 FOCI</div>
+    <div class="fc-icon">🔒</div>
+    <h1 class="fc-title">This site is blocked</h1>
+    <p class="fc-reason">${reason}</p>
+    <p class="fc-msg">You blocked this to stay focused.<br>Keep going — you're doing great.</p>
+    <button class="fc-btn" onclick="history.back()">Go Back</button>
+    <br><br>
+    <a class="fc-link" href="http://localhost:5173" target="_blank">Open Foci Dashboard</a>
+  </div>
+</body>
+</html>`)
+  document.close()
+}
+
+// 4. RUN — wait for DOM to be ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', checkAndBlock)
+} else {
+  checkAndBlock()
+}
+
+// 5. SPA URL CHANGE WATCHER
+let lastUrl = window.location.href
+setInterval(() => {
+  if (window.location.href !== lastUrl) {
+    lastUrl = window.location.href
+    checkAndBlock()
+  }
+}, 1000)
