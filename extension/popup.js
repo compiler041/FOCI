@@ -3,8 +3,8 @@ const API_BASE = 'http://localhost:5000'
 document.addEventListener('DOMContentLoaded', async () => {
 
   // ── 1. CHECK LOGIN STATE ───────────────────
-  const { foci_token, blockedApps, blockingEnabled } = await chrome.storage.local.get([
-    'foci_token', 'blockedApps', 'blockingEnabled'
+  let { foci_token, blockedApps, blockingEnabled, breakUntil } = await chrome.storage.local.get([
+    'foci_token', 'blockedApps', 'blockingEnabled', 'breakUntil'
   ])
 
   if (!foci_token) {
@@ -104,6 +104,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     syncBtn.textContent = '⟳ Sync Rules'
     syncBtn.disabled = false
   })
+  // ── 6. BREAK LOGIC ────────────────────────
+  const breakUI = document.getElementById('breakUI')
+  const activeBreakUI = document.getElementById('activeBreakUI')
+  const breakTimeLeft = document.getElementById('breakTimeLeft')
+  const startBreakBtn = document.getElementById('startBreakBtn')
+  const durationSelect = document.getElementById('breakDuration')
+
+  let breakTimer = null
+
+  function updateBreakUI() {
+    if (breakUntil && Date.now() < breakUntil) {
+      breakUI.style.display = 'none'
+      activeBreakUI.style.display = 'flex'
+      
+      if (breakTimer) clearInterval(breakTimer)
+      breakTimer = setInterval(() => {
+        const remaining = breakUntil - Date.now()
+        if (remaining <= 0) {
+          clearInterval(breakTimer)
+          breakUntil = null
+          chrome.storage.local.remove('breakUntil')
+          updateBreakUI()
+        } else {
+          const m = Math.floor(remaining / 60000)
+          const s = Math.floor((remaining % 60000) / 1000)
+          breakTimeLeft.textContent = `${m}:${String(s).padStart(2,'0')}`
+        }
+      }, 1000)
+    } else {
+      breakUI.style.display = 'flex'
+      activeBreakUI.style.display = 'none'
+      if (breakTimer) clearInterval(breakTimer)
+    }
+  }
+
+  updateBreakUI()
+
+  startBreakBtn.addEventListener('click', () => {
+    const duration = parseInt(durationSelect.value)
+    // Open friction screen
+    chrome.tabs.create({ url: chrome.runtime.getURL(`break-friction.html?duration=${duration}`) })
+  })
+
 })
 
 // ── HELPERS ───────────────────────────────

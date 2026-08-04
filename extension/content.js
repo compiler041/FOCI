@@ -34,7 +34,7 @@ async function checkAndBlock() {
   try {
     data = await new Promise((resolve, reject) => {
       chrome.storage.local.get(
-        ['blockedApps', 'youtubeAllowlist', 'blockingEnabled'],
+        ['blockedApps', 'youtubeAllowlist', 'youtubePlaylists', 'blockingEnabled', 'breakUntil'],
         (result) => {
           if (chrome.runtime.lastError) reject(chrome.runtime.lastError)
           else resolve(result)
@@ -47,6 +47,11 @@ async function checkAndBlock() {
 
   // If user toggled off "Block Distractions" in popup, don't block
   if (data.blockingEnabled === false) {
+    return
+  }
+
+  // If user is on an active break
+  if (data.breakUntil && Date.now() < data.breakUntil) {
     return
   }
 
@@ -70,10 +75,19 @@ async function checkAndBlock() {
     return
   }
 
-  // YouTube allowlist
+  // YouTube allowlist + playlist check
   if (hostname.includes('youtube.com')) {
     try {
-      const vid = new URL(url).searchParams.get('v')
+      const urlObj = new URL(url)
+      const vid = urlObj.searchParams.get('v')
+      const listId = urlObj.searchParams.get('list')
+
+      // If video is part of an allowlisted playlist, allow it
+      if (listId && data.youtubePlaylists?.some(p => p.playlistId === listId)) {
+        return
+      }
+
+      // If individual video is allowlisted, allow it
       if (vid && data.youtubeAllowlist?.some(v => v.videoId === vid)) {
         return
       }

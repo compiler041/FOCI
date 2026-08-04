@@ -47,14 +47,15 @@ async function syncRules() {
     ])
 
     const { apps } = await blockedRes.json()
-    const { allowlist } = await ytRes.json()
+    const { allowlist, playlists } = await ytRes.json()
 
     await chrome.storage.local.set({
       blockedApps: apps.filter(a => a.isBlocked),
-      youtubeAllowlist: allowlist || []
+      youtubeAllowlist: allowlist || [],
+      youtubePlaylists: playlists || []
     })
 
-    console.log(`Foci synced: ${apps.filter(a => a.isBlocked).length} blocked`)
+    console.log(`Foci synced: ${apps.filter(a => a.isBlocked).length} blocked, ${(playlists || []).length} playlists`)
   } catch (e) {
     console.error('Foci sync failed:', e)
   }
@@ -70,10 +71,11 @@ async function shouldBlock(url) {
     }
 
     const data = await chrome.storage.local.get([
-      'blockedApps', 'youtubeAllowlist', 'blockingEnabled'
+      'blockedApps', 'youtubeAllowlist', 'youtubePlaylists', 'blockingEnabled', 'breakUntil'
     ])
 
     if (data.blockingEnabled === false) return null
+    if (data.breakUntil && Date.now() < data.breakUntil) return null
     if (!data.blockedApps || !data.blockedApps.length) return null
 
     const urlObj = new URL(url)
@@ -87,11 +89,28 @@ async function shouldBlock(url) {
 
     if (!app) return null
 
-    // YouTube allowlist
+    // YouTube allowlist + playlist logic
     if (hostname.includes('youtube.com')) {
       const vid = urlObj.searchParams.get('v')
+      const listId = urlObj.searchParams.get('list')
+
+      // Check if this video's playlist is allowlisted
+      if (listId && data.youtubePlaylists?.some(p => p.playlistId === listId)) {
+        return null // Entire playlist is allowed
+      }
+
+      // Check individual video allowlist
+      if (vid && data.youtubeAllowlist?.some(v => v.videoId === vid)) {
+        return null
+      }
+
+      // If it's a playlist page (no video), check if playlist is allowed
+      if (listId && !vid) {
+        if (data.youtubePlaylists?.some(p => p.playlistId === listId)) return null
+        return `This YouTube playlist is not in your allowlist`
+      }
+
       if (!vid) return `YouTube is blocked`
-      if (data.youtubeAllowlist?.some(v => v.videoId === vid)) return null
       return `This YouTube video is not in your allowlist`
     }
 
@@ -177,6 +196,21 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   }
   if (msg.type === 'SYNC_NOW') {
     syncRules().then(() => sendResponse({ success: true }))
+    return true
+  }
+  if (msg.type === 'START_BREAK') {
+    const breakUntil = Date.now() + (msg.duration * 60000)
+    chrome.storage.local.set({ breakUntil }, async () => {
+      sendResponse({ success: true, breakUntil })
+      
+      // Auto-reload all tabs that are http/https so blocked sites unblock instantly
+      try {
+        const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] })
+        for (const tab of tabs) {
+          chrome.tabs.reload(tab.id)
+        }
+      } catch (e) {}
+    })
     return true
   }
 })

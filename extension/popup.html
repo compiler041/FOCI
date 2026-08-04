@@ -435,6 +435,30 @@
           <span class="toggle-slider"></span>
         </label>
       </div>
+      
+      <!-- Break Section -->
+      <div class="toggle-row" id="breakUI">
+        <div>
+          <div class="toggle-label" style="color: var(--teal)">Take a Break</div>
+          <div class="toggle-sub">Unlock apps temporarily</div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <select id="breakDuration" style="background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 4px; font-size: 12px; outline: none;">
+            <option value="5">5 min</option>
+            <option value="10" selected>10 min</option>
+            <option value="15">15 min</option>
+          </select>
+          <button id="startBreakBtn" style="background: var(--teal); color: #000; border: none; border-radius: 6px; padding: 4px 10px; font-weight: 700; font-size: 12px; cursor: pointer;">Go</button>
+        </div>
+      </div>
+      
+      <div id="activeBreakUI" style="display: none; padding: 14px 16px; background: rgba(34,211,238,0.1); border: 1px solid rgba(34,211,238,0.2); border-radius: 10px; margin-bottom: 10px; align-items: center; justify-content: space-between;">
+        <div>
+          <div style="font-size: 13px; font-weight: 700; color: var(--teal)">Break Active</div>
+          <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">Apps are unlocked</div>
+        </div>
+        <div id="breakTimeLeft" style="font-size: 14px; font-weight: 800; color: var(--teal); font-variant-numeric: tabular-nums;">--:--</div>
+      </div>
     </div>
 
     <!-- Blocked apps -->

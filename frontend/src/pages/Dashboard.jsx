@@ -121,10 +121,11 @@ export default function Dashboard() {
 
   async function fetchDashboardData() {
     try {
-      const [sessionsRes, blockedRes, schedulesRes] = await Promise.all([
+      const [sessionsRes, blockedRes, schedulesRes, breaksRes] = await Promise.all([
         client.get('/api/sessions'),
         client.get('/api/blocked-apps'),
-        client.get('/api/schedules').catch(() => ({ data: { schedules: [] } }))
+        client.get('/api/schedules').catch(() => ({ data: { schedules: [] } })),
+        client.get('/api/breaks/today').catch(() => ({ data: { count: 0 } }))
       ])
       const allSessionsList = sessionsRes.data.sessions || []
       setAllSessions(allSessionsList)
@@ -149,7 +150,8 @@ export default function Dashboard() {
         .filter(s => s.status === 'COMPLETED')
         .reduce((acc, s) => acc + (s.duration || 0), 0)
         
-      const breaksToday = todaySessions.reduce((acc, s) => acc + (s.breaks?.length || 0), 0)
+      const inSessionBreaks = todaySessions.reduce((acc, s) => acc + (s.breaks?.length || 0), 0)
+      const breaksToday = (breaksRes.data?.count || 0) + inSessionBreaks
 
       const completedDays = new Set(
         allSessions.filter(s => s.status === 'COMPLETED').map(s => new Date(s.startTime).toDateString())

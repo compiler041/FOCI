@@ -20,10 +20,12 @@ model User {
 
   oauthAccounts    OAuthAccount[]
   sessions         FocusSession[]
+  breaks           Break[]
   blockedApps      BlockedApp[]
   strictness       Strictness?
   themes           UserTheme?
   youtubeAllowlist YoutubeAllowlist[]
+  youtubePlaylists YoutubePlaylist[]
   achievements     UserAchievement[]
   schedules        Schedule[]
 }
@@ -84,8 +86,11 @@ model Break {
   adDuration Int // how long the ad was at this break number
   skipped    Boolean  @default(false)
 
-  sessionId String
-  session   FocusSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId String?
+  session   FocusSession? @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model BlockedApp {
@@ -133,6 +138,19 @@ model YoutubeAllowlist {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, videoId])
+}
+
+model YoutubePlaylist {
+  id         String   @id @default(uuid())
+  playlistId String
+  url        String
+  title      String?
+  addedAt    DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, playlistId])
 }
 
 model Achievement {

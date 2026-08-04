@@ -166,7 +166,8 @@ exports.Prisma.BreakScalarFieldEnum = {
   takenAt: 'takenAt',
   adDuration: 'adDuration',
   skipped: 'skipped',
-  sessionId: 'sessionId'
+  sessionId: 'sessionId',
+  userId: 'userId'
 };
 
 exports.Prisma.BlockedAppScalarFieldEnum = {
@@ -198,6 +199,15 @@ exports.Prisma.YoutubeAllowlistScalarFieldEnum = {
   url: 'url',
   title: 'title',
   thumbnail: 'thumbnail',
+  addedAt: 'addedAt',
+  userId: 'userId'
+};
+
+exports.Prisma.YoutubePlaylistScalarFieldEnum = {
+  id: 'id',
+  playlistId: 'playlistId',
+  url: 'url',
+  title: 'title',
   addedAt: 'addedAt',
   userId: 'userId'
 };
@@ -258,6 +268,7 @@ exports.Prisma.ModelName = {
   Theme: 'Theme',
   UserTheme: 'UserTheme',
   YoutubeAllowlist: 'YoutubeAllowlist',
+  YoutubePlaylist: 'YoutubePlaylist',
   Achievement: 'Achievement',
   UserAchievement: 'UserAchievement',
   Schedule: 'Schedule'

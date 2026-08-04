@@ -59,6 +59,11 @@ export type UserTheme = $Result.DefaultSelection<Prisma.$UserThemePayload>
  */
 export type YoutubeAllowlist = $Result.DefaultSelection<Prisma.$YoutubeAllowlistPayload>
 /**
+ * Model YoutubePlaylist
+ * 
+ */
+export type YoutubePlaylist = $Result.DefaultSelection<Prisma.$YoutubePlaylistPayload>
+/**
  * Model Achievement
  * 
  */
@@ -302,6 +307,16 @@ export class PrismaClient<
     * ```
     */
   get youtubeAllowlist(): Prisma.YoutubeAllowlistDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.youtubePlaylist`: Exposes CRUD operations for the **YoutubePlaylist** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more YoutubePlaylists
+    * const youtubePlaylists = await prisma.youtubePlaylist.findMany()
+    * ```
+    */
+  get youtubePlaylist(): Prisma.YoutubePlaylistDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.achievement`: Exposes CRUD operations for the **Achievement** model.
@@ -775,6 +790,7 @@ export namespace Prisma {
     Theme: 'Theme',
     UserTheme: 'UserTheme',
     YoutubeAllowlist: 'YoutubeAllowlist',
+    YoutubePlaylist: 'YoutubePlaylist',
     Achievement: 'Achievement',
     UserAchievement: 'UserAchievement',
     Schedule: 'Schedule'
@@ -793,7 +809,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "oAuthAccount" | "focusSession" | "strictness" | "break" | "blockedApp" | "theme" | "userTheme" | "youtubeAllowlist" | "achievement" | "userAchievement" | "schedule"
+      modelProps: "user" | "oAuthAccount" | "focusSession" | "strictness" | "break" | "blockedApp" | "theme" | "userTheme" | "youtubeAllowlist" | "youtubePlaylist" | "achievement" | "userAchievement" | "schedule"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1463,6 +1479,80 @@ export namespace Prisma {
           }
         }
       }
+      YoutubePlaylist: {
+        payload: Prisma.$YoutubePlaylistPayload<ExtArgs>
+        fields: Prisma.YoutubePlaylistFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.YoutubePlaylistFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.YoutubePlaylistFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>
+          }
+          findFirst: {
+            args: Prisma.YoutubePlaylistFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.YoutubePlaylistFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>
+          }
+          findMany: {
+            args: Prisma.YoutubePlaylistFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>[]
+          }
+          create: {
+            args: Prisma.YoutubePlaylistCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>
+          }
+          createMany: {
+            args: Prisma.YoutubePlaylistCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.YoutubePlaylistCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>[]
+          }
+          delete: {
+            args: Prisma.YoutubePlaylistDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>
+          }
+          update: {
+            args: Prisma.YoutubePlaylistUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>
+          }
+          deleteMany: {
+            args: Prisma.YoutubePlaylistDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.YoutubePlaylistUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.YoutubePlaylistUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>[]
+          }
+          upsert: {
+            args: Prisma.YoutubePlaylistUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$YoutubePlaylistPayload>
+          }
+          aggregate: {
+            args: Prisma.YoutubePlaylistAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateYoutubePlaylist>
+          }
+          groupBy: {
+            args: Prisma.YoutubePlaylistGroupByArgs<ExtArgs>
+            result: $Utils.Optional<YoutubePlaylistGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.YoutubePlaylistCountArgs<ExtArgs>
+            result: $Utils.Optional<YoutubePlaylistCountAggregateOutputType> | number
+          }
+        }
+      }
       Achievement: {
         payload: Prisma.$AchievementPayload<ExtArgs>
         fields: Prisma.AchievementFieldRefs
@@ -1802,6 +1892,7 @@ export namespace Prisma {
     theme?: ThemeOmit
     userTheme?: UserThemeOmit
     youtubeAllowlist?: YoutubeAllowlistOmit
+    youtubePlaylist?: YoutubePlaylistOmit
     achievement?: AchievementOmit
     userAchievement?: UserAchievementOmit
     schedule?: ScheduleOmit
@@ -1887,8 +1978,10 @@ export namespace Prisma {
   export type UserCountOutputType = {
     oauthAccounts: number
     sessions: number
+    breaks: number
     blockedApps: number
     youtubeAllowlist: number
+    youtubePlaylists: number
     achievements: number
     schedules: number
   }
@@ -1896,8 +1989,10 @@ export namespace Prisma {
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     oauthAccounts?: boolean | UserCountOutputTypeCountOauthAccountsArgs
     sessions?: boolean | UserCountOutputTypeCountSessionsArgs
+    breaks?: boolean | UserCountOutputTypeCountBreaksArgs
     blockedApps?: boolean | UserCountOutputTypeCountBlockedAppsArgs
     youtubeAllowlist?: boolean | UserCountOutputTypeCountYoutubeAllowlistArgs
+    youtubePlaylists?: boolean | UserCountOutputTypeCountYoutubePlaylistsArgs
     achievements?: boolean | UserCountOutputTypeCountAchievementsArgs
     schedules?: boolean | UserCountOutputTypeCountSchedulesArgs
   }
@@ -1930,6 +2025,13 @@ export namespace Prisma {
   /**
    * UserCountOutputType without action
    */
+  export type UserCountOutputTypeCountBreaksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BreakWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
   export type UserCountOutputTypeCountBlockedAppsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: BlockedAppWhereInput
   }
@@ -1939,6 +2041,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountYoutubeAllowlistArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: YoutubeAllowlistWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountYoutubePlaylistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: YoutubePlaylistWhereInput
   }
 
   /**
@@ -2289,10 +2398,12 @@ export namespace Prisma {
     totalFocusSeconds?: boolean
     oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    breaks?: boolean | User$breaksArgs<ExtArgs>
     blockedApps?: boolean | User$blockedAppsArgs<ExtArgs>
     strictness?: boolean | User$strictnessArgs<ExtArgs>
     themes?: boolean | User$themesArgs<ExtArgs>
     youtubeAllowlist?: boolean | User$youtubeAllowlistArgs<ExtArgs>
+    youtubePlaylists?: boolean | User$youtubePlaylistsArgs<ExtArgs>
     achievements?: boolean | User$achievementsArgs<ExtArgs>
     schedules?: boolean | User$schedulesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2338,10 +2449,12 @@ export namespace Prisma {
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     oauthAccounts?: boolean | User$oauthAccountsArgs<ExtArgs>
     sessions?: boolean | User$sessionsArgs<ExtArgs>
+    breaks?: boolean | User$breaksArgs<ExtArgs>
     blockedApps?: boolean | User$blockedAppsArgs<ExtArgs>
     strictness?: boolean | User$strictnessArgs<ExtArgs>
     themes?: boolean | User$themesArgs<ExtArgs>
     youtubeAllowlist?: boolean | User$youtubeAllowlistArgs<ExtArgs>
+    youtubePlaylists?: boolean | User$youtubePlaylistsArgs<ExtArgs>
     achievements?: boolean | User$achievementsArgs<ExtArgs>
     schedules?: boolean | User$schedulesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -2354,10 +2467,12 @@ export namespace Prisma {
     objects: {
       oauthAccounts: Prisma.$OAuthAccountPayload<ExtArgs>[]
       sessions: Prisma.$FocusSessionPayload<ExtArgs>[]
+      breaks: Prisma.$BreakPayload<ExtArgs>[]
       blockedApps: Prisma.$BlockedAppPayload<ExtArgs>[]
       strictness: Prisma.$StrictnessPayload<ExtArgs> | null
       themes: Prisma.$UserThemePayload<ExtArgs> | null
       youtubeAllowlist: Prisma.$YoutubeAllowlistPayload<ExtArgs>[]
+      youtubePlaylists: Prisma.$YoutubePlaylistPayload<ExtArgs>[]
       achievements: Prisma.$UserAchievementPayload<ExtArgs>[]
       schedules: Prisma.$SchedulePayload<ExtArgs>[]
     }
@@ -2767,10 +2882,12 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     oauthAccounts<T extends User$oauthAccountsArgs<ExtArgs> = {}>(args?: Subset<T, User$oauthAccountsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OAuthAccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     sessions<T extends User$sessionsArgs<ExtArgs> = {}>(args?: Subset<T, User$sessionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    breaks<T extends User$breaksArgs<ExtArgs> = {}>(args?: Subset<T, User$breaksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BreakPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     blockedApps<T extends User$blockedAppsArgs<ExtArgs> = {}>(args?: Subset<T, User$blockedAppsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BlockedAppPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     strictness<T extends User$strictnessArgs<ExtArgs> = {}>(args?: Subset<T, User$strictnessArgs<ExtArgs>>): Prisma__StrictnessClient<$Result.GetResult<Prisma.$StrictnessPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     themes<T extends User$themesArgs<ExtArgs> = {}>(args?: Subset<T, User$themesArgs<ExtArgs>>): Prisma__UserThemeClient<$Result.GetResult<Prisma.$UserThemePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     youtubeAllowlist<T extends User$youtubeAllowlistArgs<ExtArgs> = {}>(args?: Subset<T, User$youtubeAllowlistArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$YoutubeAllowlistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    youtubePlaylists<T extends User$youtubePlaylistsArgs<ExtArgs> = {}>(args?: Subset<T, User$youtubePlaylistsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     achievements<T extends User$achievementsArgs<ExtArgs> = {}>(args?: Subset<T, User$achievementsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     schedules<T extends User$schedulesArgs<ExtArgs> = {}>(args?: Subset<T, User$schedulesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SchedulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
@@ -3252,6 +3369,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.breaks
+   */
+  export type User$breaksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Break
+     */
+    select?: BreakSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Break
+     */
+    omit?: BreakOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BreakInclude<ExtArgs> | null
+    where?: BreakWhereInput
+    orderBy?: BreakOrderByWithRelationInput | BreakOrderByWithRelationInput[]
+    cursor?: BreakWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BreakScalarFieldEnum | BreakScalarFieldEnum[]
+  }
+
+  /**
    * User.blockedApps
    */
   export type User$blockedAppsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3335,6 +3476,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: YoutubeAllowlistScalarFieldEnum | YoutubeAllowlistScalarFieldEnum[]
+  }
+
+  /**
+   * User.youtubePlaylists
+   */
+  export type User$youtubePlaylistsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    where?: YoutubePlaylistWhereInput
+    orderBy?: YoutubePlaylistOrderByWithRelationInput | YoutubePlaylistOrderByWithRelationInput[]
+    cursor?: YoutubePlaylistWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: YoutubePlaylistScalarFieldEnum | YoutubePlaylistScalarFieldEnum[]
   }
 
   /**
@@ -6859,6 +7024,7 @@ export namespace Prisma {
     adDuration: number | null
     skipped: boolean | null
     sessionId: string | null
+    userId: string | null
   }
 
   export type BreakMaxAggregateOutputType = {
@@ -6867,6 +7033,7 @@ export namespace Prisma {
     adDuration: number | null
     skipped: boolean | null
     sessionId: string | null
+    userId: string | null
   }
 
   export type BreakCountAggregateOutputType = {
@@ -6875,6 +7042,7 @@ export namespace Prisma {
     adDuration: number
     skipped: number
     sessionId: number
+    userId: number
     _all: number
   }
 
@@ -6893,6 +7061,7 @@ export namespace Prisma {
     adDuration?: true
     skipped?: true
     sessionId?: true
+    userId?: true
   }
 
   export type BreakMaxAggregateInputType = {
@@ -6901,6 +7070,7 @@ export namespace Prisma {
     adDuration?: true
     skipped?: true
     sessionId?: true
+    userId?: true
   }
 
   export type BreakCountAggregateInputType = {
@@ -6909,6 +7079,7 @@ export namespace Prisma {
     adDuration?: true
     skipped?: true
     sessionId?: true
+    userId?: true
     _all?: true
   }
 
@@ -7003,7 +7174,8 @@ export namespace Prisma {
     takenAt: Date
     adDuration: number
     skipped: boolean
-    sessionId: string
+    sessionId: string | null
+    userId: string | null
     _count: BreakCountAggregateOutputType | null
     _avg: BreakAvgAggregateOutputType | null
     _sum: BreakSumAggregateOutputType | null
@@ -7031,7 +7203,9 @@ export namespace Prisma {
     adDuration?: boolean
     skipped?: boolean
     sessionId?: boolean
-    session?: boolean | FocusSessionDefaultArgs<ExtArgs>
+    userId?: boolean
+    session?: boolean | Break$sessionArgs<ExtArgs>
+    user?: boolean | Break$userArgs<ExtArgs>
   }, ExtArgs["result"]["break"]>
 
   export type BreakSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7040,7 +7214,9 @@ export namespace Prisma {
     adDuration?: boolean
     skipped?: boolean
     sessionId?: boolean
-    session?: boolean | FocusSessionDefaultArgs<ExtArgs>
+    userId?: boolean
+    session?: boolean | Break$sessionArgs<ExtArgs>
+    user?: boolean | Break$userArgs<ExtArgs>
   }, ExtArgs["result"]["break"]>
 
   export type BreakSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -7049,7 +7225,9 @@ export namespace Prisma {
     adDuration?: boolean
     skipped?: boolean
     sessionId?: boolean
-    session?: boolean | FocusSessionDefaultArgs<ExtArgs>
+    userId?: boolean
+    session?: boolean | Break$sessionArgs<ExtArgs>
+    user?: boolean | Break$userArgs<ExtArgs>
   }, ExtArgs["result"]["break"]>
 
   export type BreakSelectScalar = {
@@ -7058,30 +7236,36 @@ export namespace Prisma {
     adDuration?: boolean
     skipped?: boolean
     sessionId?: boolean
+    userId?: boolean
   }
 
-  export type BreakOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "takenAt" | "adDuration" | "skipped" | "sessionId", ExtArgs["result"]["break"]>
+  export type BreakOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "takenAt" | "adDuration" | "skipped" | "sessionId" | "userId", ExtArgs["result"]["break"]>
   export type BreakInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    session?: boolean | FocusSessionDefaultArgs<ExtArgs>
+    session?: boolean | Break$sessionArgs<ExtArgs>
+    user?: boolean | Break$userArgs<ExtArgs>
   }
   export type BreakIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    session?: boolean | FocusSessionDefaultArgs<ExtArgs>
+    session?: boolean | Break$sessionArgs<ExtArgs>
+    user?: boolean | Break$userArgs<ExtArgs>
   }
   export type BreakIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    session?: boolean | FocusSessionDefaultArgs<ExtArgs>
+    session?: boolean | Break$sessionArgs<ExtArgs>
+    user?: boolean | Break$userArgs<ExtArgs>
   }
 
   export type $BreakPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Break"
     objects: {
-      session: Prisma.$FocusSessionPayload<ExtArgs>
+      session: Prisma.$FocusSessionPayload<ExtArgs> | null
+      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       takenAt: Date
       adDuration: number
       skipped: boolean
-      sessionId: string
+      sessionId: string | null
+      userId: string | null
     }, ExtArgs["result"]["break"]>
     composites: {}
   }
@@ -7476,7 +7660,8 @@ export namespace Prisma {
    */
   export interface Prisma__BreakClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    session<T extends FocusSessionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, FocusSessionDefaultArgs<ExtArgs>>): Prisma__FocusSessionClient<$Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    session<T extends Break$sessionArgs<ExtArgs> = {}>(args?: Subset<T, Break$sessionArgs<ExtArgs>>): Prisma__FocusSessionClient<$Result.GetResult<Prisma.$FocusSessionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    user<T extends Break$userArgs<ExtArgs> = {}>(args?: Subset<T, Break$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7511,6 +7696,7 @@ export namespace Prisma {
     readonly adDuration: FieldRef<"Break", 'Int'>
     readonly skipped: FieldRef<"Break", 'Boolean'>
     readonly sessionId: FieldRef<"Break", 'String'>
+    readonly userId: FieldRef<"Break", 'String'>
   }
     
 
@@ -7909,6 +8095,44 @@ export namespace Prisma {
      * Limit how many Breaks to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Break.session
+   */
+  export type Break$sessionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FocusSession
+     */
+    select?: FocusSessionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FocusSession
+     */
+    omit?: FocusSessionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FocusSessionInclude<ExtArgs> | null
+    where?: FocusSessionWhereInput
+  }
+
+  /**
+   * Break.user
+   */
+  export type Break$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
   }
 
   /**
@@ -12208,6 +12432,1082 @@ export namespace Prisma {
 
 
   /**
+   * Model YoutubePlaylist
+   */
+
+  export type AggregateYoutubePlaylist = {
+    _count: YoutubePlaylistCountAggregateOutputType | null
+    _min: YoutubePlaylistMinAggregateOutputType | null
+    _max: YoutubePlaylistMaxAggregateOutputType | null
+  }
+
+  export type YoutubePlaylistMinAggregateOutputType = {
+    id: string | null
+    playlistId: string | null
+    url: string | null
+    title: string | null
+    addedAt: Date | null
+    userId: string | null
+  }
+
+  export type YoutubePlaylistMaxAggregateOutputType = {
+    id: string | null
+    playlistId: string | null
+    url: string | null
+    title: string | null
+    addedAt: Date | null
+    userId: string | null
+  }
+
+  export type YoutubePlaylistCountAggregateOutputType = {
+    id: number
+    playlistId: number
+    url: number
+    title: number
+    addedAt: number
+    userId: number
+    _all: number
+  }
+
+
+  export type YoutubePlaylistMinAggregateInputType = {
+    id?: true
+    playlistId?: true
+    url?: true
+    title?: true
+    addedAt?: true
+    userId?: true
+  }
+
+  export type YoutubePlaylistMaxAggregateInputType = {
+    id?: true
+    playlistId?: true
+    url?: true
+    title?: true
+    addedAt?: true
+    userId?: true
+  }
+
+  export type YoutubePlaylistCountAggregateInputType = {
+    id?: true
+    playlistId?: true
+    url?: true
+    title?: true
+    addedAt?: true
+    userId?: true
+    _all?: true
+  }
+
+  export type YoutubePlaylistAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which YoutubePlaylist to aggregate.
+     */
+    where?: YoutubePlaylistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePlaylists to fetch.
+     */
+    orderBy?: YoutubePlaylistOrderByWithRelationInput | YoutubePlaylistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: YoutubePlaylistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePlaylists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePlaylists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned YoutubePlaylists
+    **/
+    _count?: true | YoutubePlaylistCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: YoutubePlaylistMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: YoutubePlaylistMaxAggregateInputType
+  }
+
+  export type GetYoutubePlaylistAggregateType<T extends YoutubePlaylistAggregateArgs> = {
+        [P in keyof T & keyof AggregateYoutubePlaylist]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateYoutubePlaylist[P]>
+      : GetScalarType<T[P], AggregateYoutubePlaylist[P]>
+  }
+
+
+
+
+  export type YoutubePlaylistGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: YoutubePlaylistWhereInput
+    orderBy?: YoutubePlaylistOrderByWithAggregationInput | YoutubePlaylistOrderByWithAggregationInput[]
+    by: YoutubePlaylistScalarFieldEnum[] | YoutubePlaylistScalarFieldEnum
+    having?: YoutubePlaylistScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: YoutubePlaylistCountAggregateInputType | true
+    _min?: YoutubePlaylistMinAggregateInputType
+    _max?: YoutubePlaylistMaxAggregateInputType
+  }
+
+  export type YoutubePlaylistGroupByOutputType = {
+    id: string
+    playlistId: string
+    url: string
+    title: string | null
+    addedAt: Date
+    userId: string
+    _count: YoutubePlaylistCountAggregateOutputType | null
+    _min: YoutubePlaylistMinAggregateOutputType | null
+    _max: YoutubePlaylistMaxAggregateOutputType | null
+  }
+
+  type GetYoutubePlaylistGroupByPayload<T extends YoutubePlaylistGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<YoutubePlaylistGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof YoutubePlaylistGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], YoutubePlaylistGroupByOutputType[P]>
+            : GetScalarType<T[P], YoutubePlaylistGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type YoutubePlaylistSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playlistId?: boolean
+    url?: boolean
+    title?: boolean
+    addedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["youtubePlaylist"]>
+
+  export type YoutubePlaylistSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playlistId?: boolean
+    url?: boolean
+    title?: boolean
+    addedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["youtubePlaylist"]>
+
+  export type YoutubePlaylistSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playlistId?: boolean
+    url?: boolean
+    title?: boolean
+    addedAt?: boolean
+    userId?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["youtubePlaylist"]>
+
+  export type YoutubePlaylistSelectScalar = {
+    id?: boolean
+    playlistId?: boolean
+    url?: boolean
+    title?: boolean
+    addedAt?: boolean
+    userId?: boolean
+  }
+
+  export type YoutubePlaylistOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playlistId" | "url" | "title" | "addedAt" | "userId", ExtArgs["result"]["youtubePlaylist"]>
+  export type YoutubePlaylistInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type YoutubePlaylistIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type YoutubePlaylistIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $YoutubePlaylistPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "YoutubePlaylist"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      playlistId: string
+      url: string
+      title: string | null
+      addedAt: Date
+      userId: string
+    }, ExtArgs["result"]["youtubePlaylist"]>
+    composites: {}
+  }
+
+  type YoutubePlaylistGetPayload<S extends boolean | null | undefined | YoutubePlaylistDefaultArgs> = $Result.GetResult<Prisma.$YoutubePlaylistPayload, S>
+
+  type YoutubePlaylistCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<YoutubePlaylistFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: YoutubePlaylistCountAggregateInputType | true
+    }
+
+  export interface YoutubePlaylistDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['YoutubePlaylist'], meta: { name: 'YoutubePlaylist' } }
+    /**
+     * Find zero or one YoutubePlaylist that matches the filter.
+     * @param {YoutubePlaylistFindUniqueArgs} args - Arguments to find a YoutubePlaylist
+     * @example
+     * // Get one YoutubePlaylist
+     * const youtubePlaylist = await prisma.youtubePlaylist.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends YoutubePlaylistFindUniqueArgs>(args: SelectSubset<T, YoutubePlaylistFindUniqueArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one YoutubePlaylist that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {YoutubePlaylistFindUniqueOrThrowArgs} args - Arguments to find a YoutubePlaylist
+     * @example
+     * // Get one YoutubePlaylist
+     * const youtubePlaylist = await prisma.youtubePlaylist.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends YoutubePlaylistFindUniqueOrThrowArgs>(args: SelectSubset<T, YoutubePlaylistFindUniqueOrThrowArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first YoutubePlaylist that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePlaylistFindFirstArgs} args - Arguments to find a YoutubePlaylist
+     * @example
+     * // Get one YoutubePlaylist
+     * const youtubePlaylist = await prisma.youtubePlaylist.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends YoutubePlaylistFindFirstArgs>(args?: SelectSubset<T, YoutubePlaylistFindFirstArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first YoutubePlaylist that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePlaylistFindFirstOrThrowArgs} args - Arguments to find a YoutubePlaylist
+     * @example
+     * // Get one YoutubePlaylist
+     * const youtubePlaylist = await prisma.youtubePlaylist.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends YoutubePlaylistFindFirstOrThrowArgs>(args?: SelectSubset<T, YoutubePlaylistFindFirstOrThrowArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more YoutubePlaylists that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePlaylistFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all YoutubePlaylists
+     * const youtubePlaylists = await prisma.youtubePlaylist.findMany()
+     * 
+     * // Get first 10 YoutubePlaylists
+     * const youtubePlaylists = await prisma.youtubePlaylist.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const youtubePlaylistWithIdOnly = await prisma.youtubePlaylist.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends YoutubePlaylistFindManyArgs>(args?: SelectSubset<T, YoutubePlaylistFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a YoutubePlaylist.
+     * @param {YoutubePlaylistCreateArgs} args - Arguments to create a YoutubePlaylist.
+     * @example
+     * // Create one YoutubePlaylist
+     * const YoutubePlaylist = await prisma.youtubePlaylist.create({
+     *   data: {
+     *     // ... data to create a YoutubePlaylist
+     *   }
+     * })
+     * 
+     */
+    create<T extends YoutubePlaylistCreateArgs>(args: SelectSubset<T, YoutubePlaylistCreateArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many YoutubePlaylists.
+     * @param {YoutubePlaylistCreateManyArgs} args - Arguments to create many YoutubePlaylists.
+     * @example
+     * // Create many YoutubePlaylists
+     * const youtubePlaylist = await prisma.youtubePlaylist.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends YoutubePlaylistCreateManyArgs>(args?: SelectSubset<T, YoutubePlaylistCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many YoutubePlaylists and returns the data saved in the database.
+     * @param {YoutubePlaylistCreateManyAndReturnArgs} args - Arguments to create many YoutubePlaylists.
+     * @example
+     * // Create many YoutubePlaylists
+     * const youtubePlaylist = await prisma.youtubePlaylist.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many YoutubePlaylists and only return the `id`
+     * const youtubePlaylistWithIdOnly = await prisma.youtubePlaylist.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends YoutubePlaylistCreateManyAndReturnArgs>(args?: SelectSubset<T, YoutubePlaylistCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a YoutubePlaylist.
+     * @param {YoutubePlaylistDeleteArgs} args - Arguments to delete one YoutubePlaylist.
+     * @example
+     * // Delete one YoutubePlaylist
+     * const YoutubePlaylist = await prisma.youtubePlaylist.delete({
+     *   where: {
+     *     // ... filter to delete one YoutubePlaylist
+     *   }
+     * })
+     * 
+     */
+    delete<T extends YoutubePlaylistDeleteArgs>(args: SelectSubset<T, YoutubePlaylistDeleteArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one YoutubePlaylist.
+     * @param {YoutubePlaylistUpdateArgs} args - Arguments to update one YoutubePlaylist.
+     * @example
+     * // Update one YoutubePlaylist
+     * const youtubePlaylist = await prisma.youtubePlaylist.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends YoutubePlaylistUpdateArgs>(args: SelectSubset<T, YoutubePlaylistUpdateArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more YoutubePlaylists.
+     * @param {YoutubePlaylistDeleteManyArgs} args - Arguments to filter YoutubePlaylists to delete.
+     * @example
+     * // Delete a few YoutubePlaylists
+     * const { count } = await prisma.youtubePlaylist.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends YoutubePlaylistDeleteManyArgs>(args?: SelectSubset<T, YoutubePlaylistDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubePlaylists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePlaylistUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many YoutubePlaylists
+     * const youtubePlaylist = await prisma.youtubePlaylist.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends YoutubePlaylistUpdateManyArgs>(args: SelectSubset<T, YoutubePlaylistUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more YoutubePlaylists and returns the data updated in the database.
+     * @param {YoutubePlaylistUpdateManyAndReturnArgs} args - Arguments to update many YoutubePlaylists.
+     * @example
+     * // Update many YoutubePlaylists
+     * const youtubePlaylist = await prisma.youtubePlaylist.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more YoutubePlaylists and only return the `id`
+     * const youtubePlaylistWithIdOnly = await prisma.youtubePlaylist.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends YoutubePlaylistUpdateManyAndReturnArgs>(args: SelectSubset<T, YoutubePlaylistUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one YoutubePlaylist.
+     * @param {YoutubePlaylistUpsertArgs} args - Arguments to update or create a YoutubePlaylist.
+     * @example
+     * // Update or create a YoutubePlaylist
+     * const youtubePlaylist = await prisma.youtubePlaylist.upsert({
+     *   create: {
+     *     // ... data to create a YoutubePlaylist
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the YoutubePlaylist we want to update
+     *   }
+     * })
+     */
+    upsert<T extends YoutubePlaylistUpsertArgs>(args: SelectSubset<T, YoutubePlaylistUpsertArgs<ExtArgs>>): Prisma__YoutubePlaylistClient<$Result.GetResult<Prisma.$YoutubePlaylistPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of YoutubePlaylists.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePlaylistCountArgs} args - Arguments to filter YoutubePlaylists to count.
+     * @example
+     * // Count the number of YoutubePlaylists
+     * const count = await prisma.youtubePlaylist.count({
+     *   where: {
+     *     // ... the filter for the YoutubePlaylists we want to count
+     *   }
+     * })
+    **/
+    count<T extends YoutubePlaylistCountArgs>(
+      args?: Subset<T, YoutubePlaylistCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], YoutubePlaylistCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a YoutubePlaylist.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePlaylistAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends YoutubePlaylistAggregateArgs>(args: Subset<T, YoutubePlaylistAggregateArgs>): Prisma.PrismaPromise<GetYoutubePlaylistAggregateType<T>>
+
+    /**
+     * Group by YoutubePlaylist.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {YoutubePlaylistGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends YoutubePlaylistGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: YoutubePlaylistGroupByArgs['orderBy'] }
+        : { orderBy?: YoutubePlaylistGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, YoutubePlaylistGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetYoutubePlaylistGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the YoutubePlaylist model
+   */
+  readonly fields: YoutubePlaylistFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for YoutubePlaylist.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__YoutubePlaylistClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the YoutubePlaylist model
+   */
+  interface YoutubePlaylistFieldRefs {
+    readonly id: FieldRef<"YoutubePlaylist", 'String'>
+    readonly playlistId: FieldRef<"YoutubePlaylist", 'String'>
+    readonly url: FieldRef<"YoutubePlaylist", 'String'>
+    readonly title: FieldRef<"YoutubePlaylist", 'String'>
+    readonly addedAt: FieldRef<"YoutubePlaylist", 'DateTime'>
+    readonly userId: FieldRef<"YoutubePlaylist", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * YoutubePlaylist findUnique
+   */
+  export type YoutubePlaylistFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * Filter, which YoutubePlaylist to fetch.
+     */
+    where: YoutubePlaylistWhereUniqueInput
+  }
+
+  /**
+   * YoutubePlaylist findUniqueOrThrow
+   */
+  export type YoutubePlaylistFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * Filter, which YoutubePlaylist to fetch.
+     */
+    where: YoutubePlaylistWhereUniqueInput
+  }
+
+  /**
+   * YoutubePlaylist findFirst
+   */
+  export type YoutubePlaylistFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * Filter, which YoutubePlaylist to fetch.
+     */
+    where?: YoutubePlaylistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePlaylists to fetch.
+     */
+    orderBy?: YoutubePlaylistOrderByWithRelationInput | YoutubePlaylistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubePlaylists.
+     */
+    cursor?: YoutubePlaylistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePlaylists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePlaylists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubePlaylists.
+     */
+    distinct?: YoutubePlaylistScalarFieldEnum | YoutubePlaylistScalarFieldEnum[]
+  }
+
+  /**
+   * YoutubePlaylist findFirstOrThrow
+   */
+  export type YoutubePlaylistFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * Filter, which YoutubePlaylist to fetch.
+     */
+    where?: YoutubePlaylistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePlaylists to fetch.
+     */
+    orderBy?: YoutubePlaylistOrderByWithRelationInput | YoutubePlaylistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for YoutubePlaylists.
+     */
+    cursor?: YoutubePlaylistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePlaylists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePlaylists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubePlaylists.
+     */
+    distinct?: YoutubePlaylistScalarFieldEnum | YoutubePlaylistScalarFieldEnum[]
+  }
+
+  /**
+   * YoutubePlaylist findMany
+   */
+  export type YoutubePlaylistFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * Filter, which YoutubePlaylists to fetch.
+     */
+    where?: YoutubePlaylistWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of YoutubePlaylists to fetch.
+     */
+    orderBy?: YoutubePlaylistOrderByWithRelationInput | YoutubePlaylistOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing YoutubePlaylists.
+     */
+    cursor?: YoutubePlaylistWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` YoutubePlaylists from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` YoutubePlaylists.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of YoutubePlaylists.
+     */
+    distinct?: YoutubePlaylistScalarFieldEnum | YoutubePlaylistScalarFieldEnum[]
+  }
+
+  /**
+   * YoutubePlaylist create
+   */
+  export type YoutubePlaylistCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * The data needed to create a YoutubePlaylist.
+     */
+    data: XOR<YoutubePlaylistCreateInput, YoutubePlaylistUncheckedCreateInput>
+  }
+
+  /**
+   * YoutubePlaylist createMany
+   */
+  export type YoutubePlaylistCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many YoutubePlaylists.
+     */
+    data: YoutubePlaylistCreateManyInput | YoutubePlaylistCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * YoutubePlaylist createManyAndReturn
+   */
+  export type YoutubePlaylistCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * The data used to create many YoutubePlaylists.
+     */
+    data: YoutubePlaylistCreateManyInput | YoutubePlaylistCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * YoutubePlaylist update
+   */
+  export type YoutubePlaylistUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * The data needed to update a YoutubePlaylist.
+     */
+    data: XOR<YoutubePlaylistUpdateInput, YoutubePlaylistUncheckedUpdateInput>
+    /**
+     * Choose, which YoutubePlaylist to update.
+     */
+    where: YoutubePlaylistWhereUniqueInput
+  }
+
+  /**
+   * YoutubePlaylist updateMany
+   */
+  export type YoutubePlaylistUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update YoutubePlaylists.
+     */
+    data: XOR<YoutubePlaylistUpdateManyMutationInput, YoutubePlaylistUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubePlaylists to update
+     */
+    where?: YoutubePlaylistWhereInput
+    /**
+     * Limit how many YoutubePlaylists to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * YoutubePlaylist updateManyAndReturn
+   */
+  export type YoutubePlaylistUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * The data used to update YoutubePlaylists.
+     */
+    data: XOR<YoutubePlaylistUpdateManyMutationInput, YoutubePlaylistUncheckedUpdateManyInput>
+    /**
+     * Filter which YoutubePlaylists to update
+     */
+    where?: YoutubePlaylistWhereInput
+    /**
+     * Limit how many YoutubePlaylists to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * YoutubePlaylist upsert
+   */
+  export type YoutubePlaylistUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * The filter to search for the YoutubePlaylist to update in case it exists.
+     */
+    where: YoutubePlaylistWhereUniqueInput
+    /**
+     * In case the YoutubePlaylist found by the `where` argument doesn't exist, create a new YoutubePlaylist with this data.
+     */
+    create: XOR<YoutubePlaylistCreateInput, YoutubePlaylistUncheckedCreateInput>
+    /**
+     * In case the YoutubePlaylist was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<YoutubePlaylistUpdateInput, YoutubePlaylistUncheckedUpdateInput>
+  }
+
+  /**
+   * YoutubePlaylist delete
+   */
+  export type YoutubePlaylistDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+    /**
+     * Filter which YoutubePlaylist to delete.
+     */
+    where: YoutubePlaylistWhereUniqueInput
+  }
+
+  /**
+   * YoutubePlaylist deleteMany
+   */
+  export type YoutubePlaylistDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which YoutubePlaylists to delete
+     */
+    where?: YoutubePlaylistWhereInput
+    /**
+     * Limit how many YoutubePlaylists to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * YoutubePlaylist without action
+   */
+  export type YoutubePlaylistDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the YoutubePlaylist
+     */
+    select?: YoutubePlaylistSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the YoutubePlaylist
+     */
+    omit?: YoutubePlaylistOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: YoutubePlaylistInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Achievement
    */
 
@@ -15544,7 +16844,8 @@ export namespace Prisma {
     takenAt: 'takenAt',
     adDuration: 'adDuration',
     skipped: 'skipped',
-    sessionId: 'sessionId'
+    sessionId: 'sessionId',
+    userId: 'userId'
   };
 
   export type BreakScalarFieldEnum = (typeof BreakScalarFieldEnum)[keyof typeof BreakScalarFieldEnum]
@@ -15593,6 +16894,18 @@ export namespace Prisma {
   };
 
   export type YoutubeAllowlistScalarFieldEnum = (typeof YoutubeAllowlistScalarFieldEnum)[keyof typeof YoutubeAllowlistScalarFieldEnum]
+
+
+  export const YoutubePlaylistScalarFieldEnum: {
+    id: 'id',
+    playlistId: 'playlistId',
+    url: 'url',
+    title: 'title',
+    addedAt: 'addedAt',
+    userId: 'userId'
+  };
+
+  export type YoutubePlaylistScalarFieldEnum = (typeof YoutubePlaylistScalarFieldEnum)[keyof typeof YoutubePlaylistScalarFieldEnum]
 
 
   export const AchievementScalarFieldEnum: {
@@ -15754,10 +17067,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFilter<"User"> | number
     oauthAccounts?: OAuthAccountListRelationFilter
     sessions?: FocusSessionListRelationFilter
+    breaks?: BreakListRelationFilter
     blockedApps?: BlockedAppListRelationFilter
     strictness?: XOR<StrictnessNullableScalarRelationFilter, StrictnessWhereInput> | null
     themes?: XOR<UserThemeNullableScalarRelationFilter, UserThemeWhereInput> | null
     youtubeAllowlist?: YoutubeAllowlistListRelationFilter
+    youtubePlaylists?: YoutubePlaylistListRelationFilter
     achievements?: UserAchievementListRelationFilter
     schedules?: ScheduleListRelationFilter
   }
@@ -15774,10 +17089,12 @@ export namespace Prisma {
     totalFocusSeconds?: SortOrder
     oauthAccounts?: OAuthAccountOrderByRelationAggregateInput
     sessions?: FocusSessionOrderByRelationAggregateInput
+    breaks?: BreakOrderByRelationAggregateInput
     blockedApps?: BlockedAppOrderByRelationAggregateInput
     strictness?: StrictnessOrderByWithRelationInput
     themes?: UserThemeOrderByWithRelationInput
     youtubeAllowlist?: YoutubeAllowlistOrderByRelationAggregateInput
+    youtubePlaylists?: YoutubePlaylistOrderByRelationAggregateInput
     achievements?: UserAchievementOrderByRelationAggregateInput
     schedules?: ScheduleOrderByRelationAggregateInput
   }
@@ -15797,10 +17114,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFilter<"User"> | number
     oauthAccounts?: OAuthAccountListRelationFilter
     sessions?: FocusSessionListRelationFilter
+    breaks?: BreakListRelationFilter
     blockedApps?: BlockedAppListRelationFilter
     strictness?: XOR<StrictnessNullableScalarRelationFilter, StrictnessWhereInput> | null
     themes?: XOR<UserThemeNullableScalarRelationFilter, UserThemeWhereInput> | null
     youtubeAllowlist?: YoutubeAllowlistListRelationFilter
+    youtubePlaylists?: YoutubePlaylistListRelationFilter
     achievements?: UserAchievementListRelationFilter
     schedules?: ScheduleListRelationFilter
   }, "id" | "email">
@@ -16049,8 +17368,10 @@ export namespace Prisma {
     takenAt?: DateTimeFilter<"Break"> | Date | string
     adDuration?: IntFilter<"Break"> | number
     skipped?: BoolFilter<"Break"> | boolean
-    sessionId?: StringFilter<"Break"> | string
-    session?: XOR<FocusSessionScalarRelationFilter, FocusSessionWhereInput>
+    sessionId?: StringNullableFilter<"Break"> | string | null
+    userId?: StringNullableFilter<"Break"> | string | null
+    session?: XOR<FocusSessionNullableScalarRelationFilter, FocusSessionWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }
 
   export type BreakOrderByWithRelationInput = {
@@ -16058,8 +17379,10 @@ export namespace Prisma {
     takenAt?: SortOrder
     adDuration?: SortOrder
     skipped?: SortOrder
-    sessionId?: SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
     session?: FocusSessionOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
   }
 
   export type BreakWhereUniqueInput = Prisma.AtLeast<{
@@ -16070,8 +17393,10 @@ export namespace Prisma {
     takenAt?: DateTimeFilter<"Break"> | Date | string
     adDuration?: IntFilter<"Break"> | number
     skipped?: BoolFilter<"Break"> | boolean
-    sessionId?: StringFilter<"Break"> | string
-    session?: XOR<FocusSessionScalarRelationFilter, FocusSessionWhereInput>
+    sessionId?: StringNullableFilter<"Break"> | string | null
+    userId?: StringNullableFilter<"Break"> | string | null
+    session?: XOR<FocusSessionNullableScalarRelationFilter, FocusSessionWhereInput> | null
+    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
   }, "id">
 
   export type BreakOrderByWithAggregationInput = {
@@ -16079,7 +17404,8 @@ export namespace Prisma {
     takenAt?: SortOrder
     adDuration?: SortOrder
     skipped?: SortOrder
-    sessionId?: SortOrder
+    sessionId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
     _count?: BreakCountOrderByAggregateInput
     _avg?: BreakAvgOrderByAggregateInput
     _max?: BreakMaxOrderByAggregateInput
@@ -16095,7 +17421,8 @@ export namespace Prisma {
     takenAt?: DateTimeWithAggregatesFilter<"Break"> | Date | string
     adDuration?: IntWithAggregatesFilter<"Break"> | number
     skipped?: BoolWithAggregatesFilter<"Break"> | boolean
-    sessionId?: StringWithAggregatesFilter<"Break"> | string
+    sessionId?: StringNullableWithAggregatesFilter<"Break"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"Break"> | string | null
   }
 
   export type BlockedAppWhereInput = {
@@ -16328,6 +17655,67 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"YoutubeAllowlist"> | string
   }
 
+  export type YoutubePlaylistWhereInput = {
+    AND?: YoutubePlaylistWhereInput | YoutubePlaylistWhereInput[]
+    OR?: YoutubePlaylistWhereInput[]
+    NOT?: YoutubePlaylistWhereInput | YoutubePlaylistWhereInput[]
+    id?: StringFilter<"YoutubePlaylist"> | string
+    playlistId?: StringFilter<"YoutubePlaylist"> | string
+    url?: StringFilter<"YoutubePlaylist"> | string
+    title?: StringNullableFilter<"YoutubePlaylist"> | string | null
+    addedAt?: DateTimeFilter<"YoutubePlaylist"> | Date | string
+    userId?: StringFilter<"YoutubePlaylist"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type YoutubePlaylistOrderByWithRelationInput = {
+    id?: SortOrder
+    playlistId?: SortOrder
+    url?: SortOrder
+    title?: SortOrderInput | SortOrder
+    addedAt?: SortOrder
+    userId?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type YoutubePlaylistWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_playlistId?: YoutubePlaylistUserIdPlaylistIdCompoundUniqueInput
+    AND?: YoutubePlaylistWhereInput | YoutubePlaylistWhereInput[]
+    OR?: YoutubePlaylistWhereInput[]
+    NOT?: YoutubePlaylistWhereInput | YoutubePlaylistWhereInput[]
+    playlistId?: StringFilter<"YoutubePlaylist"> | string
+    url?: StringFilter<"YoutubePlaylist"> | string
+    title?: StringNullableFilter<"YoutubePlaylist"> | string | null
+    addedAt?: DateTimeFilter<"YoutubePlaylist"> | Date | string
+    userId?: StringFilter<"YoutubePlaylist"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_playlistId">
+
+  export type YoutubePlaylistOrderByWithAggregationInput = {
+    id?: SortOrder
+    playlistId?: SortOrder
+    url?: SortOrder
+    title?: SortOrderInput | SortOrder
+    addedAt?: SortOrder
+    userId?: SortOrder
+    _count?: YoutubePlaylistCountOrderByAggregateInput
+    _max?: YoutubePlaylistMaxOrderByAggregateInput
+    _min?: YoutubePlaylistMinOrderByAggregateInput
+  }
+
+  export type YoutubePlaylistScalarWhereWithAggregatesInput = {
+    AND?: YoutubePlaylistScalarWhereWithAggregatesInput | YoutubePlaylistScalarWhereWithAggregatesInput[]
+    OR?: YoutubePlaylistScalarWhereWithAggregatesInput[]
+    NOT?: YoutubePlaylistScalarWhereWithAggregatesInput | YoutubePlaylistScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"YoutubePlaylist"> | string
+    playlistId?: StringWithAggregatesFilter<"YoutubePlaylist"> | string
+    url?: StringWithAggregatesFilter<"YoutubePlaylist"> | string
+    title?: StringNullableWithAggregatesFilter<"YoutubePlaylist"> | string | null
+    addedAt?: DateTimeWithAggregatesFilter<"YoutubePlaylist"> | Date | string
+    userId?: StringWithAggregatesFilter<"YoutubePlaylist"> | string
+  }
+
   export type AchievementWhereInput = {
     AND?: AchievementWhereInput | AchievementWhereInput[]
     OR?: AchievementWhereInput[]
@@ -16521,10 +17909,12 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
@@ -16541,10 +17931,12 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
@@ -16561,10 +17953,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
@@ -16581,10 +17975,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -16837,7 +18233,8 @@ export namespace Prisma {
     takenAt?: Date | string
     adDuration: number
     skipped?: boolean
-    session: FocusSessionCreateNestedOneWithoutBreaksInput
+    session?: FocusSessionCreateNestedOneWithoutBreaksInput
+    user?: UserCreateNestedOneWithoutBreaksInput
   }
 
   export type BreakUncheckedCreateInput = {
@@ -16845,7 +18242,8 @@ export namespace Prisma {
     takenAt?: Date | string
     adDuration: number
     skipped?: boolean
-    sessionId: string
+    sessionId?: string | null
+    userId?: string | null
   }
 
   export type BreakUpdateInput = {
@@ -16853,7 +18251,8 @@ export namespace Prisma {
     takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adDuration?: IntFieldUpdateOperationsInput | number
     skipped?: BoolFieldUpdateOperationsInput | boolean
-    session?: FocusSessionUpdateOneRequiredWithoutBreaksNestedInput
+    session?: FocusSessionUpdateOneWithoutBreaksNestedInput
+    user?: UserUpdateOneWithoutBreaksNestedInput
   }
 
   export type BreakUncheckedUpdateInput = {
@@ -16861,7 +18260,8 @@ export namespace Prisma {
     takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adDuration?: IntFieldUpdateOperationsInput | number
     skipped?: BoolFieldUpdateOperationsInput | boolean
-    sessionId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BreakCreateManyInput = {
@@ -16869,7 +18269,8 @@ export namespace Prisma {
     takenAt?: Date | string
     adDuration: number
     skipped?: boolean
-    sessionId: string
+    sessionId?: string | null
+    userId?: string | null
   }
 
   export type BreakUpdateManyMutationInput = {
@@ -16884,7 +18285,8 @@ export namespace Prisma {
     takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adDuration?: IntFieldUpdateOperationsInput | number
     skipped?: BoolFieldUpdateOperationsInput | boolean
-    sessionId?: StringFieldUpdateOperationsInput | string
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BlockedAppCreateInput = {
@@ -17114,6 +18516,68 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type YoutubePlaylistCreateInput = {
+    id?: string
+    playlistId: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+    user: UserCreateNestedOneWithoutYoutubePlaylistsInput
+  }
+
+  export type YoutubePlaylistUncheckedCreateInput = {
+    id?: string
+    playlistId: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+    userId: string
+  }
+
+  export type YoutubePlaylistUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playlistId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutYoutubePlaylistsNestedInput
+  }
+
+  export type YoutubePlaylistUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playlistId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type YoutubePlaylistCreateManyInput = {
+    id?: string
+    playlistId: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+    userId: string
+  }
+
+  export type YoutubePlaylistUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playlistId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePlaylistUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playlistId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: StringFieldUpdateOperationsInput | string
   }
@@ -17370,6 +18834,12 @@ export namespace Prisma {
     none?: FocusSessionWhereInput
   }
 
+  export type BreakListRelationFilter = {
+    every?: BreakWhereInput
+    some?: BreakWhereInput
+    none?: BreakWhereInput
+  }
+
   export type BlockedAppListRelationFilter = {
     every?: BlockedAppWhereInput
     some?: BlockedAppWhereInput
@@ -17390,6 +18860,12 @@ export namespace Prisma {
     every?: YoutubeAllowlistWhereInput
     some?: YoutubeAllowlistWhereInput
     none?: YoutubeAllowlistWhereInput
+  }
+
+  export type YoutubePlaylistListRelationFilter = {
+    every?: YoutubePlaylistWhereInput
+    some?: YoutubePlaylistWhereInput
+    none?: YoutubePlaylistWhereInput
   }
 
   export type UserAchievementListRelationFilter = {
@@ -17417,11 +18893,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
+  export type BreakOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type BlockedAppOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type YoutubeAllowlistOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type YoutubePlaylistOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17619,16 +19103,6 @@ export namespace Prisma {
     not?: NestedEnumSessionStatusFilter<$PrismaModel> | $Enums.SessionStatus
   }
 
-  export type BreakListRelationFilter = {
-    every?: BreakWhereInput
-    some?: BreakWhereInput
-    none?: BreakWhereInput
-  }
-
-  export type BreakOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type FocusSessionCountOrderByAggregateInput = {
     id?: SortOrder
     startTime?: SortOrder
@@ -17759,17 +19233,13 @@ export namespace Prisma {
     adIncreasePerBreak?: SortOrder
   }
 
-  export type FocusSessionScalarRelationFilter = {
-    is?: FocusSessionWhereInput
-    isNot?: FocusSessionWhereInput
-  }
-
   export type BreakCountOrderByAggregateInput = {
     id?: SortOrder
     takenAt?: SortOrder
     adDuration?: SortOrder
     skipped?: SortOrder
     sessionId?: SortOrder
+    userId?: SortOrder
   }
 
   export type BreakAvgOrderByAggregateInput = {
@@ -17782,6 +19252,7 @@ export namespace Prisma {
     adDuration?: SortOrder
     skipped?: SortOrder
     sessionId?: SortOrder
+    userId?: SortOrder
   }
 
   export type BreakMinOrderByAggregateInput = {
@@ -17790,6 +19261,7 @@ export namespace Prisma {
     adDuration?: SortOrder
     skipped?: SortOrder
     sessionId?: SortOrder
+    userId?: SortOrder
   }
 
   export type BreakSumOrderByAggregateInput = {
@@ -17924,6 +19396,38 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type YoutubePlaylistUserIdPlaylistIdCompoundUniqueInput = {
+    userId: string
+    playlistId: string
+  }
+
+  export type YoutubePlaylistCountOrderByAggregateInput = {
+    id?: SortOrder
+    playlistId?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    addedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type YoutubePlaylistMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playlistId?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    addedAt?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type YoutubePlaylistMinOrderByAggregateInput = {
+    id?: SortOrder
+    playlistId?: SortOrder
+    url?: SortOrder
+    title?: SortOrder
+    addedAt?: SortOrder
+    userId?: SortOrder
+  }
+
   export type AchievementCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -18040,6 +19544,13 @@ export namespace Prisma {
     connect?: FocusSessionWhereUniqueInput | FocusSessionWhereUniqueInput[]
   }
 
+  export type BreakCreateNestedManyWithoutUserInput = {
+    create?: XOR<BreakCreateWithoutUserInput, BreakUncheckedCreateWithoutUserInput> | BreakCreateWithoutUserInput[] | BreakUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BreakCreateOrConnectWithoutUserInput | BreakCreateOrConnectWithoutUserInput[]
+    createMany?: BreakCreateManyUserInputEnvelope
+    connect?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+  }
+
   export type BlockedAppCreateNestedManyWithoutUserInput = {
     create?: XOR<BlockedAppCreateWithoutUserInput, BlockedAppUncheckedCreateWithoutUserInput> | BlockedAppCreateWithoutUserInput[] | BlockedAppUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BlockedAppCreateOrConnectWithoutUserInput | BlockedAppCreateOrConnectWithoutUserInput[]
@@ -18064,6 +19575,13 @@ export namespace Prisma {
     connectOrCreate?: YoutubeAllowlistCreateOrConnectWithoutUserInput | YoutubeAllowlistCreateOrConnectWithoutUserInput[]
     createMany?: YoutubeAllowlistCreateManyUserInputEnvelope
     connect?: YoutubeAllowlistWhereUniqueInput | YoutubeAllowlistWhereUniqueInput[]
+  }
+
+  export type YoutubePlaylistCreateNestedManyWithoutUserInput = {
+    create?: XOR<YoutubePlaylistCreateWithoutUserInput, YoutubePlaylistUncheckedCreateWithoutUserInput> | YoutubePlaylistCreateWithoutUserInput[] | YoutubePlaylistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: YoutubePlaylistCreateOrConnectWithoutUserInput | YoutubePlaylistCreateOrConnectWithoutUserInput[]
+    createMany?: YoutubePlaylistCreateManyUserInputEnvelope
+    connect?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
   }
 
   export type UserAchievementCreateNestedManyWithoutUserInput = {
@@ -18094,6 +19612,13 @@ export namespace Prisma {
     connect?: FocusSessionWhereUniqueInput | FocusSessionWhereUniqueInput[]
   }
 
+  export type BreakUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<BreakCreateWithoutUserInput, BreakUncheckedCreateWithoutUserInput> | BreakCreateWithoutUserInput[] | BreakUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BreakCreateOrConnectWithoutUserInput | BreakCreateOrConnectWithoutUserInput[]
+    createMany?: BreakCreateManyUserInputEnvelope
+    connect?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+  }
+
   export type BlockedAppUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<BlockedAppCreateWithoutUserInput, BlockedAppUncheckedCreateWithoutUserInput> | BlockedAppCreateWithoutUserInput[] | BlockedAppUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BlockedAppCreateOrConnectWithoutUserInput | BlockedAppCreateOrConnectWithoutUserInput[]
@@ -18118,6 +19643,13 @@ export namespace Prisma {
     connectOrCreate?: YoutubeAllowlistCreateOrConnectWithoutUserInput | YoutubeAllowlistCreateOrConnectWithoutUserInput[]
     createMany?: YoutubeAllowlistCreateManyUserInputEnvelope
     connect?: YoutubeAllowlistWhereUniqueInput | YoutubeAllowlistWhereUniqueInput[]
+  }
+
+  export type YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<YoutubePlaylistCreateWithoutUserInput, YoutubePlaylistUncheckedCreateWithoutUserInput> | YoutubePlaylistCreateWithoutUserInput[] | YoutubePlaylistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: YoutubePlaylistCreateOrConnectWithoutUserInput | YoutubePlaylistCreateOrConnectWithoutUserInput[]
+    createMany?: YoutubePlaylistCreateManyUserInputEnvelope
+    connect?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
   }
 
   export type UserAchievementUncheckedCreateNestedManyWithoutUserInput = {
@@ -18186,6 +19718,20 @@ export namespace Prisma {
     deleteMany?: FocusSessionScalarWhereInput | FocusSessionScalarWhereInput[]
   }
 
+  export type BreakUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BreakCreateWithoutUserInput, BreakUncheckedCreateWithoutUserInput> | BreakCreateWithoutUserInput[] | BreakUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BreakCreateOrConnectWithoutUserInput | BreakCreateOrConnectWithoutUserInput[]
+    upsert?: BreakUpsertWithWhereUniqueWithoutUserInput | BreakUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BreakCreateManyUserInputEnvelope
+    set?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    disconnect?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    delete?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    connect?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    update?: BreakUpdateWithWhereUniqueWithoutUserInput | BreakUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BreakUpdateManyWithWhereWithoutUserInput | BreakUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BreakScalarWhereInput | BreakScalarWhereInput[]
+  }
+
   export type BlockedAppUpdateManyWithoutUserNestedInput = {
     create?: XOR<BlockedAppCreateWithoutUserInput, BlockedAppUncheckedCreateWithoutUserInput> | BlockedAppCreateWithoutUserInput[] | BlockedAppUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BlockedAppCreateOrConnectWithoutUserInput | BlockedAppCreateOrConnectWithoutUserInput[]
@@ -18232,6 +19778,20 @@ export namespace Prisma {
     update?: YoutubeAllowlistUpdateWithWhereUniqueWithoutUserInput | YoutubeAllowlistUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: YoutubeAllowlistUpdateManyWithWhereWithoutUserInput | YoutubeAllowlistUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: YoutubeAllowlistScalarWhereInput | YoutubeAllowlistScalarWhereInput[]
+  }
+
+  export type YoutubePlaylistUpdateManyWithoutUserNestedInput = {
+    create?: XOR<YoutubePlaylistCreateWithoutUserInput, YoutubePlaylistUncheckedCreateWithoutUserInput> | YoutubePlaylistCreateWithoutUserInput[] | YoutubePlaylistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: YoutubePlaylistCreateOrConnectWithoutUserInput | YoutubePlaylistCreateOrConnectWithoutUserInput[]
+    upsert?: YoutubePlaylistUpsertWithWhereUniqueWithoutUserInput | YoutubePlaylistUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: YoutubePlaylistCreateManyUserInputEnvelope
+    set?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    disconnect?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    delete?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    connect?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    update?: YoutubePlaylistUpdateWithWhereUniqueWithoutUserInput | YoutubePlaylistUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: YoutubePlaylistUpdateManyWithWhereWithoutUserInput | YoutubePlaylistUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: YoutubePlaylistScalarWhereInput | YoutubePlaylistScalarWhereInput[]
   }
 
   export type UserAchievementUpdateManyWithoutUserNestedInput = {
@@ -18290,6 +19850,20 @@ export namespace Prisma {
     deleteMany?: FocusSessionScalarWhereInput | FocusSessionScalarWhereInput[]
   }
 
+  export type BreakUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<BreakCreateWithoutUserInput, BreakUncheckedCreateWithoutUserInput> | BreakCreateWithoutUserInput[] | BreakUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: BreakCreateOrConnectWithoutUserInput | BreakCreateOrConnectWithoutUserInput[]
+    upsert?: BreakUpsertWithWhereUniqueWithoutUserInput | BreakUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: BreakCreateManyUserInputEnvelope
+    set?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    disconnect?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    delete?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    connect?: BreakWhereUniqueInput | BreakWhereUniqueInput[]
+    update?: BreakUpdateWithWhereUniqueWithoutUserInput | BreakUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: BreakUpdateManyWithWhereWithoutUserInput | BreakUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: BreakScalarWhereInput | BreakScalarWhereInput[]
+  }
+
   export type BlockedAppUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<BlockedAppCreateWithoutUserInput, BlockedAppUncheckedCreateWithoutUserInput> | BlockedAppCreateWithoutUserInput[] | BlockedAppUncheckedCreateWithoutUserInput[]
     connectOrCreate?: BlockedAppCreateOrConnectWithoutUserInput | BlockedAppCreateOrConnectWithoutUserInput[]
@@ -18336,6 +19910,20 @@ export namespace Prisma {
     update?: YoutubeAllowlistUpdateWithWhereUniqueWithoutUserInput | YoutubeAllowlistUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: YoutubeAllowlistUpdateManyWithWhereWithoutUserInput | YoutubeAllowlistUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: YoutubeAllowlistScalarWhereInput | YoutubeAllowlistScalarWhereInput[]
+  }
+
+  export type YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<YoutubePlaylistCreateWithoutUserInput, YoutubePlaylistUncheckedCreateWithoutUserInput> | YoutubePlaylistCreateWithoutUserInput[] | YoutubePlaylistUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: YoutubePlaylistCreateOrConnectWithoutUserInput | YoutubePlaylistCreateOrConnectWithoutUserInput[]
+    upsert?: YoutubePlaylistUpsertWithWhereUniqueWithoutUserInput | YoutubePlaylistUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: YoutubePlaylistCreateManyUserInputEnvelope
+    set?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    disconnect?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    delete?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    connect?: YoutubePlaylistWhereUniqueInput | YoutubePlaylistWhereUniqueInput[]
+    update?: YoutubePlaylistUpdateWithWhereUniqueWithoutUserInput | YoutubePlaylistUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: YoutubePlaylistUpdateManyWithWhereWithoutUserInput | YoutubePlaylistUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: YoutubePlaylistScalarWhereInput | YoutubePlaylistScalarWhereInput[]
   }
 
   export type UserAchievementUncheckedUpdateManyWithoutUserNestedInput = {
@@ -18522,12 +20110,30 @@ export namespace Prisma {
     connect?: FocusSessionWhereUniqueInput
   }
 
-  export type FocusSessionUpdateOneRequiredWithoutBreaksNestedInput = {
+  export type UserCreateNestedOneWithoutBreaksInput = {
+    create?: XOR<UserCreateWithoutBreaksInput, UserUncheckedCreateWithoutBreaksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBreaksInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type FocusSessionUpdateOneWithoutBreaksNestedInput = {
     create?: XOR<FocusSessionCreateWithoutBreaksInput, FocusSessionUncheckedCreateWithoutBreaksInput>
     connectOrCreate?: FocusSessionCreateOrConnectWithoutBreaksInput
     upsert?: FocusSessionUpsertWithoutBreaksInput
+    disconnect?: FocusSessionWhereInput | boolean
+    delete?: FocusSessionWhereInput | boolean
     connect?: FocusSessionWhereUniqueInput
     update?: XOR<XOR<FocusSessionUpdateToOneWithWhereWithoutBreaksInput, FocusSessionUpdateWithoutBreaksInput>, FocusSessionUncheckedUpdateWithoutBreaksInput>
+  }
+
+  export type UserUpdateOneWithoutBreaksNestedInput = {
+    create?: XOR<UserCreateWithoutBreaksInput, UserUncheckedCreateWithoutBreaksInput>
+    connectOrCreate?: UserCreateOrConnectWithoutBreaksInput
+    upsert?: UserUpsertWithoutBreaksInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutBreaksInput, UserUpdateWithoutBreaksInput>, UserUncheckedUpdateWithoutBreaksInput>
   }
 
   export type UserCreateNestedOneWithoutBlockedAppsInput = {
@@ -18644,6 +20250,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutYoutubeAllowlistInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutYoutubeAllowlistInput, UserUpdateWithoutYoutubeAllowlistInput>, UserUncheckedUpdateWithoutYoutubeAllowlistInput>
+  }
+
+  export type UserCreateNestedOneWithoutYoutubePlaylistsInput = {
+    create?: XOR<UserCreateWithoutYoutubePlaylistsInput, UserUncheckedCreateWithoutYoutubePlaylistsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutYoutubePlaylistsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutYoutubePlaylistsNestedInput = {
+    create?: XOR<UserCreateWithoutYoutubePlaylistsInput, UserUncheckedCreateWithoutYoutubePlaylistsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutYoutubePlaylistsInput
+    upsert?: UserUpsertWithoutYoutubePlaylistsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutYoutubePlaylistsInput, UserUpdateWithoutYoutubePlaylistsInput>, UserUncheckedUpdateWithoutYoutubePlaylistsInput>
   }
 
   export type UserAchievementCreateNestedManyWithoutAchievementInput = {
@@ -19015,6 +20635,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type BreakCreateWithoutUserInput = {
+    id?: string
+    takenAt?: Date | string
+    adDuration: number
+    skipped?: boolean
+    session?: FocusSessionCreateNestedOneWithoutBreaksInput
+  }
+
+  export type BreakUncheckedCreateWithoutUserInput = {
+    id?: string
+    takenAt?: Date | string
+    adDuration: number
+    skipped?: boolean
+    sessionId?: string | null
+  }
+
+  export type BreakCreateOrConnectWithoutUserInput = {
+    where: BreakWhereUniqueInput
+    create: XOR<BreakCreateWithoutUserInput, BreakUncheckedCreateWithoutUserInput>
+  }
+
+  export type BreakCreateManyUserInputEnvelope = {
+    data: BreakCreateManyUserInput | BreakCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BlockedAppCreateWithoutUserInput = {
     id?: string
     appName: string
@@ -19102,6 +20748,32 @@ export namespace Prisma {
 
   export type YoutubeAllowlistCreateManyUserInputEnvelope = {
     data: YoutubeAllowlistCreateManyUserInput | YoutubeAllowlistCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type YoutubePlaylistCreateWithoutUserInput = {
+    id?: string
+    playlistId: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+  }
+
+  export type YoutubePlaylistUncheckedCreateWithoutUserInput = {
+    id?: string
+    playlistId: string
+    url: string
+    title?: string | null
+    addedAt?: Date | string
+  }
+
+  export type YoutubePlaylistCreateOrConnectWithoutUserInput = {
+    where: YoutubePlaylistWhereUniqueInput
+    create: XOR<YoutubePlaylistCreateWithoutUserInput, YoutubePlaylistUncheckedCreateWithoutUserInput>
+  }
+
+  export type YoutubePlaylistCreateManyUserInputEnvelope = {
+    data: YoutubePlaylistCreateManyUserInput | YoutubePlaylistCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -19214,6 +20886,34 @@ export namespace Prisma {
     userId?: StringFilter<"FocusSession"> | string
   }
 
+  export type BreakUpsertWithWhereUniqueWithoutUserInput = {
+    where: BreakWhereUniqueInput
+    update: XOR<BreakUpdateWithoutUserInput, BreakUncheckedUpdateWithoutUserInput>
+    create: XOR<BreakCreateWithoutUserInput, BreakUncheckedCreateWithoutUserInput>
+  }
+
+  export type BreakUpdateWithWhereUniqueWithoutUserInput = {
+    where: BreakWhereUniqueInput
+    data: XOR<BreakUpdateWithoutUserInput, BreakUncheckedUpdateWithoutUserInput>
+  }
+
+  export type BreakUpdateManyWithWhereWithoutUserInput = {
+    where: BreakScalarWhereInput
+    data: XOR<BreakUpdateManyMutationInput, BreakUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type BreakScalarWhereInput = {
+    AND?: BreakScalarWhereInput | BreakScalarWhereInput[]
+    OR?: BreakScalarWhereInput[]
+    NOT?: BreakScalarWhereInput | BreakScalarWhereInput[]
+    id?: StringFilter<"Break"> | string
+    takenAt?: DateTimeFilter<"Break"> | Date | string
+    adDuration?: IntFilter<"Break"> | number
+    skipped?: BoolFilter<"Break"> | boolean
+    sessionId?: StringNullableFilter<"Break"> | string | null
+    userId?: StringNullableFilter<"Break"> | string | null
+  }
+
   export type BlockedAppUpsertWithWhereUniqueWithoutUserInput = {
     where: BlockedAppWhereUniqueInput
     update: XOR<BlockedAppUpdateWithoutUserInput, BlockedAppUncheckedUpdateWithoutUserInput>
@@ -19320,6 +21020,34 @@ export namespace Prisma {
     userId?: StringFilter<"YoutubeAllowlist"> | string
   }
 
+  export type YoutubePlaylistUpsertWithWhereUniqueWithoutUserInput = {
+    where: YoutubePlaylistWhereUniqueInput
+    update: XOR<YoutubePlaylistUpdateWithoutUserInput, YoutubePlaylistUncheckedUpdateWithoutUserInput>
+    create: XOR<YoutubePlaylistCreateWithoutUserInput, YoutubePlaylistUncheckedCreateWithoutUserInput>
+  }
+
+  export type YoutubePlaylistUpdateWithWhereUniqueWithoutUserInput = {
+    where: YoutubePlaylistWhereUniqueInput
+    data: XOR<YoutubePlaylistUpdateWithoutUserInput, YoutubePlaylistUncheckedUpdateWithoutUserInput>
+  }
+
+  export type YoutubePlaylistUpdateManyWithWhereWithoutUserInput = {
+    where: YoutubePlaylistScalarWhereInput
+    data: XOR<YoutubePlaylistUpdateManyMutationInput, YoutubePlaylistUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type YoutubePlaylistScalarWhereInput = {
+    AND?: YoutubePlaylistScalarWhereInput | YoutubePlaylistScalarWhereInput[]
+    OR?: YoutubePlaylistScalarWhereInput[]
+    NOT?: YoutubePlaylistScalarWhereInput | YoutubePlaylistScalarWhereInput[]
+    id?: StringFilter<"YoutubePlaylist"> | string
+    playlistId?: StringFilter<"YoutubePlaylist"> | string
+    url?: StringFilter<"YoutubePlaylist"> | string
+    title?: StringNullableFilter<"YoutubePlaylist"> | string | null
+    addedAt?: DateTimeFilter<"YoutubePlaylist"> | Date | string
+    userId?: StringFilter<"YoutubePlaylist"> | string
+  }
+
   export type UserAchievementUpsertWithWhereUniqueWithoutUserInput = {
     where: UserAchievementWhereUniqueInput
     update: XOR<UserAchievementUpdateWithoutUserInput, UserAchievementUncheckedUpdateWithoutUserInput>
@@ -19387,10 +21115,12 @@ export namespace Prisma {
     strictnessLevel?: number
     totalFocusSeconds?: number
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
@@ -19406,10 +21136,12 @@ export namespace Prisma {
     strictnessLevel?: number
     totalFocusSeconds?: number
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
@@ -19441,10 +21173,12 @@ export namespace Prisma {
     strictnessLevel?: IntFieldUpdateOperationsInput | number
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
@@ -19460,10 +21194,12 @@ export namespace Prisma {
     strictnessLevel?: IntFieldUpdateOperationsInput | number
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -19479,10 +21215,12 @@ export namespace Prisma {
     strictnessLevel?: number
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
@@ -19498,10 +21236,12 @@ export namespace Prisma {
     strictnessLevel?: number
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
@@ -19516,6 +21256,7 @@ export namespace Prisma {
     takenAt?: Date | string
     adDuration: number
     skipped?: boolean
+    user?: UserCreateNestedOneWithoutBreaksInput
   }
 
   export type BreakUncheckedCreateWithoutSessionInput = {
@@ -19523,6 +21264,7 @@ export namespace Prisma {
     takenAt?: Date | string
     adDuration: number
     skipped?: boolean
+    userId?: string | null
   }
 
   export type BreakCreateOrConnectWithoutSessionInput = {
@@ -19580,10 +21322,12 @@ export namespace Prisma {
     strictnessLevel?: IntFieldUpdateOperationsInput | number
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
@@ -19599,10 +21343,12 @@ export namespace Prisma {
     strictnessLevel?: IntFieldUpdateOperationsInput | number
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -19621,17 +21367,6 @@ export namespace Prisma {
   export type BreakUpdateManyWithWhereWithoutSessionInput = {
     where: BreakScalarWhereInput
     data: XOR<BreakUpdateManyMutationInput, BreakUncheckedUpdateManyWithoutSessionInput>
-  }
-
-  export type BreakScalarWhereInput = {
-    AND?: BreakScalarWhereInput | BreakScalarWhereInput[]
-    OR?: BreakScalarWhereInput[]
-    NOT?: BreakScalarWhereInput | BreakScalarWhereInput[]
-    id?: StringFilter<"Break"> | string
-    takenAt?: DateTimeFilter<"Break"> | Date | string
-    adDuration?: IntFilter<"Break"> | number
-    skipped?: BoolFilter<"Break"> | boolean
-    sessionId?: StringFilter<"Break"> | string
   }
 
   export type StrictnessUpsertWithoutSessionInput = {
@@ -19675,9 +21410,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
@@ -19694,9 +21431,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
@@ -19756,9 +21495,11 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
@@ -19775,9 +21516,11 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -19842,6 +21585,53 @@ export namespace Prisma {
     create: XOR<FocusSessionCreateWithoutBreaksInput, FocusSessionUncheckedCreateWithoutBreaksInput>
   }
 
+  export type UserCreateWithoutBreaksInput = {
+    id?: string
+    email: string
+    name?: string
+    password?: string | null
+    avatar?: string | null
+    isPremium?: boolean
+    createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
+    sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
+    strictness?: StrictnessCreateNestedOneWithoutUserInput
+    themes?: UserThemeCreateNestedOneWithoutUserInput
+    youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    schedules?: ScheduleCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutBreaksInput = {
+    id?: string
+    email: string
+    name?: string
+    password?: string | null
+    avatar?: string | null
+    isPremium?: boolean
+    createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
+    strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
+    themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
+    youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutBreaksInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutBreaksInput, UserUncheckedCreateWithoutBreaksInput>
+  }
+
   export type FocusSessionUpsertWithoutBreaksInput = {
     update: XOR<FocusSessionUpdateWithoutBreaksInput, FocusSessionUncheckedUpdateWithoutBreaksInput>
     create: XOR<FocusSessionCreateWithoutBreaksInput, FocusSessionUncheckedCreateWithoutBreaksInput>
@@ -19875,6 +21665,59 @@ export namespace Prisma {
     strictnessOverride?: StrictnessUncheckedUpdateOneWithoutSessionNestedInput
   }
 
+  export type UserUpsertWithoutBreaksInput = {
+    update: XOR<UserUpdateWithoutBreaksInput, UserUncheckedUpdateWithoutBreaksInput>
+    create: XOR<UserCreateWithoutBreaksInput, UserUncheckedCreateWithoutBreaksInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutBreaksInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutBreaksInput, UserUncheckedUpdateWithoutBreaksInput>
+  }
+
+  export type UserUpdateWithoutBreaksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isPremium?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
+    sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
+    strictness?: StrictnessUpdateOneWithoutUserNestedInput
+    themes?: UserThemeUpdateOneWithoutUserNestedInput
+    youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    schedules?: ScheduleUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutBreaksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isPremium?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
+    strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
+    themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
+    youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutBlockedAppsInput = {
     id?: string
     email: string
@@ -19887,9 +21730,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
@@ -19906,9 +21751,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
@@ -19941,9 +21788,11 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
@@ -19960,9 +21809,11 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -20024,9 +21875,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
@@ -20043,9 +21896,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
@@ -20101,9 +21956,11 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
@@ -20120,9 +21977,11 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -20168,9 +22027,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
@@ -20187,9 +22048,11 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
@@ -20222,9 +22085,11 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
@@ -20241,9 +22106,111 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutYoutubePlaylistsInput = {
+    id?: string
+    email: string
+    name?: string
+    password?: string | null
+    avatar?: string | null
+    isPremium?: boolean
+    createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
+    oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
+    sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
+    blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
+    strictness?: StrictnessCreateNestedOneWithoutUserInput
+    themes?: UserThemeCreateNestedOneWithoutUserInput
+    youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementCreateNestedManyWithoutUserInput
+    schedules?: ScheduleCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutYoutubePlaylistsInput = {
+    id?: string
+    email: string
+    name?: string
+    password?: string | null
+    avatar?: string | null
+    isPremium?: boolean
+    createdAt?: Date | string
+    strictnessLevel?: number
+    totalFocusSeconds?: number
+    oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
+    blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
+    strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
+    themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
+    youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
+    schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutYoutubePlaylistsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutYoutubePlaylistsInput, UserUncheckedCreateWithoutYoutubePlaylistsInput>
+  }
+
+  export type UserUpsertWithoutYoutubePlaylistsInput = {
+    update: XOR<UserUpdateWithoutYoutubePlaylistsInput, UserUncheckedUpdateWithoutYoutubePlaylistsInput>
+    create: XOR<UserCreateWithoutYoutubePlaylistsInput, UserUncheckedCreateWithoutYoutubePlaylistsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutYoutubePlaylistsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutYoutubePlaylistsInput, UserUncheckedUpdateWithoutYoutubePlaylistsInput>
+  }
+
+  export type UserUpdateWithoutYoutubePlaylistsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isPremium?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
+    oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
+    sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
+    blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
+    strictness?: StrictnessUpdateOneWithoutUserNestedInput
+    themes?: UserThemeUpdateOneWithoutUserNestedInput
+    youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    achievements?: UserAchievementUpdateManyWithoutUserNestedInput
+    schedules?: ScheduleUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutYoutubePlaylistsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
+    isPremium?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    strictnessLevel?: IntFieldUpdateOperationsInput | number
+    totalFocusSeconds?: IntFieldUpdateOperationsInput | number
+    oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
+    blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
+    strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
+    themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
+    youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -20298,10 +22265,12 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     schedules?: ScheduleCreateNestedManyWithoutUserInput
   }
 
@@ -20317,10 +22286,12 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     schedules?: ScheduleUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -20373,10 +22344,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUpdateManyWithoutUserNestedInput
   }
 
@@ -20392,10 +22365,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     schedules?: ScheduleUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -20438,10 +22413,12 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountCreateNestedManyWithoutUserInput
     sessions?: FocusSessionCreateNestedManyWithoutUserInput
+    breaks?: BreakCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppCreateNestedManyWithoutUserInput
     strictness?: StrictnessCreateNestedOneWithoutUserInput
     themes?: UserThemeCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistCreateNestedManyWithoutUserInput
     achievements?: UserAchievementCreateNestedManyWithoutUserInput
   }
 
@@ -20457,10 +22434,12 @@ export namespace Prisma {
     totalFocusSeconds?: number
     oauthAccounts?: OAuthAccountUncheckedCreateNestedManyWithoutUserInput
     sessions?: FocusSessionUncheckedCreateNestedManyWithoutUserInput
+    breaks?: BreakUncheckedCreateNestedManyWithoutUserInput
     blockedApps?: BlockedAppUncheckedCreateNestedManyWithoutUserInput
     strictness?: StrictnessUncheckedCreateNestedOneWithoutUserInput
     themes?: UserThemeUncheckedCreateNestedOneWithoutUserInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedCreateNestedManyWithoutUserInput
+    youtubePlaylists?: YoutubePlaylistUncheckedCreateNestedManyWithoutUserInput
     achievements?: UserAchievementUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -20492,10 +22471,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUpdateManyWithoutUserNestedInput
+    breaks?: BreakUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUpdateOneWithoutUserNestedInput
     themes?: UserThemeUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUpdateManyWithoutUserNestedInput
   }
 
@@ -20511,10 +22492,12 @@ export namespace Prisma {
     totalFocusSeconds?: IntFieldUpdateOperationsInput | number
     oauthAccounts?: OAuthAccountUncheckedUpdateManyWithoutUserNestedInput
     sessions?: FocusSessionUncheckedUpdateManyWithoutUserNestedInput
+    breaks?: BreakUncheckedUpdateManyWithoutUserNestedInput
     blockedApps?: BlockedAppUncheckedUpdateManyWithoutUserNestedInput
     strictness?: StrictnessUncheckedUpdateOneWithoutUserNestedInput
     themes?: UserThemeUncheckedUpdateOneWithoutUserNestedInput
     youtubeAllowlist?: YoutubeAllowlistUncheckedUpdateManyWithoutUserNestedInput
+    youtubePlaylists?: YoutubePlaylistUncheckedUpdateManyWithoutUserNestedInput
     achievements?: UserAchievementUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -20535,6 +22518,14 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type BreakCreateManyUserInput = {
+    id?: string
+    takenAt?: Date | string
+    adDuration: number
+    skipped?: boolean
+    sessionId?: string | null
+  }
+
   export type BlockedAppCreateManyUserInput = {
     id?: string
     appName: string
@@ -20548,6 +22539,14 @@ export namespace Prisma {
     url: string
     title?: string | null
     thumbnail?: string | null
+    addedAt?: Date | string
+  }
+
+  export type YoutubePlaylistCreateManyUserInput = {
+    id?: string
+    playlistId: string
+    url: string
+    title?: string | null
     addedAt?: Date | string
   }
 
@@ -20622,6 +22621,30 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BreakUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adDuration?: IntFieldUpdateOperationsInput | number
+    skipped?: BoolFieldUpdateOperationsInput | boolean
+    session?: FocusSessionUpdateOneWithoutBreaksNestedInput
+  }
+
+  export type BreakUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adDuration?: IntFieldUpdateOperationsInput | number
+    skipped?: BoolFieldUpdateOperationsInput | boolean
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type BreakUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adDuration?: IntFieldUpdateOperationsInput | number
+    skipped?: BoolFieldUpdateOperationsInput | boolean
+    sessionId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type BlockedAppUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     appName?: StringFieldUpdateOperationsInput | string
@@ -20667,6 +22690,30 @@ export namespace Prisma {
     url?: StringFieldUpdateOperationsInput | string
     title?: NullableStringFieldUpdateOperationsInput | string | null
     thumbnail?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePlaylistUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playlistId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePlaylistUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playlistId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type YoutubePlaylistUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playlistId?: StringFieldUpdateOperationsInput | string
+    url?: StringFieldUpdateOperationsInput | string
+    title?: NullableStringFieldUpdateOperationsInput | string | null
     addedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20723,6 +22770,7 @@ export namespace Prisma {
     takenAt?: Date | string
     adDuration: number
     skipped?: boolean
+    userId?: string | null
   }
 
   export type BreakUpdateWithoutSessionInput = {
@@ -20730,6 +22778,7 @@ export namespace Prisma {
     takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adDuration?: IntFieldUpdateOperationsInput | number
     skipped?: BoolFieldUpdateOperationsInput | boolean
+    user?: UserUpdateOneWithoutBreaksNestedInput
   }
 
   export type BreakUncheckedUpdateWithoutSessionInput = {
@@ -20737,6 +22786,7 @@ export namespace Prisma {
     takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adDuration?: IntFieldUpdateOperationsInput | number
     skipped?: BoolFieldUpdateOperationsInput | boolean
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BreakUncheckedUpdateManyWithoutSessionInput = {
@@ -20744,6 +22794,7 @@ export namespace Prisma {
     takenAt?: DateTimeFieldUpdateOperationsInput | Date | string
     adDuration?: IntFieldUpdateOperationsInput | number
     skipped?: BoolFieldUpdateOperationsInput | boolean
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserThemeCreateManyThemeInput = {

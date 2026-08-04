@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Preparing Break...</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0c;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+    .container {
+      max-width: 500px;
+      padding: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    .orb {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #7c6af7, #4361ee);
+      margin: 0 auto 40px;
+      box-shadow: 0 0 40px rgba(124,106,247,0.4);
+      animation: pulse 4s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.05); opacity: 1; }
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+    p {
+      color: #9ca3af;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+    }
+    .timer {
+      font-size: 48px;
+      font-weight: 900;
+      color: #e6c27a;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 40px;
+    }
+    .ad-placeholder {
+      background: rgba(255,255,255,0.05);
+      border: 1px dashed rgba(255,255,255,0.2);
+      padding: 20px;
+      border-radius: 12px;
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+      margin-top: 20px;
+      display: none;
+    }
+    .cancel-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .cancel-btn:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+  
+  <!-- Hidden YouTube iframe for nature music -->
+  <iframe id="bgMusic" width="0" height="0" src="" frameborder="0" allow="autoplay" style="display:none"></iframe>
+
+  <div class="container">
+    <div class="orb"></div>
+    <h1 id="title">Take a deep breath.</h1>
+    <p id="subtitle">Your break will start shortly. Use this time to stretch and look away from the screen.</p>
+    
+    <div class="timer" id="countdown">--</div>
+    
+    <button class="cancel-btn" id="cancelBtn">Cancel Break & Keep Working</button>
+
+    <div class="ad-placeholder" id="adSpace">
+      [ Future Ad Space ]<br>
+      Earn a break by watching a sponsor.
+    </div>
+  </div>
+
+  <script src="break-friction.js"></script>
+</body>
+</html>

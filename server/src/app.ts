@@ -10,6 +10,7 @@ import sessionsRouter from './routes/sessions/sessions.routes'
 import strictnessRouter from './routes/strictness/strictness.route'
 import themesRouter from './routes/themes/themes.routes'
 import achievementsRouter from './routes/achievements/achievements.routes'
+import breaksRouter from './routes/breaks/breaks.route'
 const app = express();
 
 app.use(cors({
@@ -37,5 +38,7 @@ app.use('/api/strictness', strictnessRouter)
 app.use('/api/themes', themesRouter)
 
 app.use('/api/achievements', achievementsRouter)
+
+app.use('/api/breaks', breaksRouter)
 
 export default app;
