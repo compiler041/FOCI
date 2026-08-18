@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import client from '../api/client'
 import PremiumCard from '../components/PremiumCard'
@@ -13,17 +13,9 @@ function formatDuration(seconds) {
   return `${m}m`
 }
 
-function formatTimer(seconds) {
-  const h = Math.floor(seconds / 3600)
-  const m = Math.floor((seconds % 3600) / 60)
-  const s = seconds % 60
-  if (h > 0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`
-  return `${m}:${String(s).padStart(2,'0')}`
-}
-
 export default function Dashboard() {
   const { user } = useAuth()
-  const [stats, setStats] = useState({ todaySeconds: 0, streak: 0, blockedCount: 0, longestSession: 0, scheduledHoursPerDay: 8, breaksToday: 0 })
+  const [stats, setStats] = useState({ todaySeconds: 0, streak: 0, blockedCount: 0, longestSession: 0, scheduledHoursPerDay: 8, breaksToday: 0, scheduleStart: '09:00', scheduleEnd: '17:00' })
   const [sessions, setSessions] = useState([])
   const [allSessions, setAllSessions] = useState([])
   const [activeSession, setActiveSession] = useState(null)
@@ -34,7 +26,8 @@ export default function Dashboard() {
   const [focusDuration, setFocusDuration] = useState(90)
   const [showBreakWall, setShowBreakWall] = useState(false)
   const [breakAdDuration, setBreakAdDuration] = useState(15)
-  const canvasRef = useRef(null)
+
+  const [now, setNow] = useState(new Date())
 
   const focusScore = Math.min(10, (stats.todaySeconds / (8 * 3600)) * 10)
 
@@ -49,75 +42,49 @@ export default function Dashboard() {
     return () => clearInterval(id)
   }, [activeSession])
 
-  // Draw donut chart
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    const w = canvas.width = 240
-    const h = canvas.height = 240
-    const cx = w / 2, cy = h / 2, r = 84, lw = 20
+    const id = setInterval(() => setNow(new Date()), 1000)
+    return () => clearInterval(id)
+  }, [])
 
-    ctx.clearRect(0, 0, w, h)
+  // Calculate Focus Window Progress
+  let pct = 0;
+  let remainingSeconds = 0;
+  let h2 = 0;
+  let m2 = 0;
+  let s2 = 0;
 
-    // Background ring
-    ctx.beginPath()
-    ctx.arc(cx, cy, r, 0, Math.PI * 2)
-    ctx.strokeStyle = '#1e1e30'
-    ctx.lineWidth = lw
-    ctx.stroke()
-
-    // Deep focus portion (gold)
-    const currentTotal = stats.todaySeconds + (activeSession ? sessionTimer : 0)
-    const deepRatio = Math.min(currentTotal / (stats.scheduledHoursPerDay * 3600), 1)
-    if (deepRatio > 0) {
-      const startA = -Math.PI / 2
-      const endA = startA + deepRatio * Math.PI * 2
-      ctx.beginPath()
-      ctx.arc(cx, cy, r, startA, endA)
-      ctx.strokeStyle = '#e6c27a'
-      ctx.lineWidth = lw
-      ctx.lineCap = 'round'
-      ctx.stroke()
-    }
-
-    // Light work (green, smaller portion)
-    const lightRatio = deepRatio * 0.3
-    if (lightRatio > 0 && deepRatio < 1) {
-      const startA = -Math.PI / 2 + deepRatio * Math.PI * 2
-      const endA = startA + lightRatio * Math.PI * 2
-      ctx.beginPath()
-      ctx.arc(cx, cy, r, startA, Math.min(endA, Math.PI * 1.5))
-      ctx.strokeStyle = '#22c55e'
-      ctx.lineWidth = lw
-      ctx.lineCap = 'round'
-      ctx.stroke()
-    }
-
-    // Center text
-    ctx.textAlign = 'center'
-    ctx.fillStyle = '#4b5563'
-    ctx.font = '500 12px Inter, sans-serif'
-    const pct = Math.round((currentTotal / (stats.scheduledHoursPerDay * 3600)) * 100) || 0
-    ctx.fillText(`Focus Today (${pct}%)`, cx, cy - 24)
-    const remainingSeconds = Math.max((stats.scheduledHoursPerDay * 3600) - currentTotal, 0)
-    const h2 = Math.floor(remainingSeconds / 3600)
-    const m2 = Math.floor((remainingSeconds % 3600) / 60)
-    const s2 = remainingSeconds % 60
-    ctx.fillStyle = '#ffffff'
+  if (stats.scheduleStart && stats.scheduleEnd) {
+    const [sh, sm] = stats.scheduleStart.split(':').map(Number)
+    const [eh, em] = stats.scheduleEnd.split(':').map(Number)
     
-    let timeText = ''
+    const startTime = new Date(now)
+    startTime.setHours(sh, sm, 0, 0)
     
-    if (h2 > 0) {
-      ctx.font = '800 26px Inter, sans-serif'
-      timeText = `${h2}h ${m2}m ${s2}s left`
-    } else {
-      ctx.font = '800 32px Inter, sans-serif'
-      timeText = `${m2}m ${s2}s left`
-    }
+    const endTime = new Date(now)
+    endTime.setHours(eh, em, 0, 0)
     
-    ctx.fillText(timeText, cx, cy + 14)
-  }, [stats, activeSession, sessionTimer])
+    let totalDuration = (endTime - startTime) / 1000
+    if (totalDuration <= 0) totalDuration = 24 * 3600 // Fallback if span goes across midnight
+    
+    let elapsed = (now - startTime) / 1000
+    if (elapsed < 0) elapsed = 0
+    if (elapsed > totalDuration) elapsed = totalDuration
+    
+    remainingSeconds = totalDuration - elapsed
+    pct = (elapsed / totalDuration) * 100
+    
+    h2 = Math.floor(remainingSeconds / 3600)
+    m2 = Math.floor((remainingSeconds % 3600) / 60)
+    s2 = Math.floor(remainingSeconds % 60)
+  }
+
+  const timeText = h2 > 0 ? `${h2}h ${m2}m ${s2}s left` : `${m2}m ${s2}s left`
+  const isDone = remainingSeconds === 0 && pct === 100
+  
+  const radius = 84;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (pct / 100) * circumference;
 
   async function fetchDashboardData() {
     try {
@@ -136,7 +103,11 @@ export default function Dashboard() {
 
       const schedule = schedulesRes.data?.schedules?.find(s => s.isActive)
       let scheduledHoursPerDay = 8
+      let scheduleStart = '09:00'
+      let scheduleEnd = '17:00'
       if (schedule && schedule.startTime && schedule.endTime) {
+        scheduleStart = schedule.startTime
+        scheduleEnd = schedule.endTime
         const [sh, sm] = schedule.startTime.split(':').map(Number)
         const [eh, em] = schedule.endTime.split(':').map(Number)
         scheduledHoursPerDay = (eh + em/60) - (sh + sm/60)
@@ -173,7 +144,9 @@ export default function Dashboard() {
         blockedCount: (blockedRes.data.apps || []).filter(a => a.isBlocked).length,
         longestSession: longest,
         scheduledHoursPerDay,
-        breaksToday
+        breaksToday,
+        scheduleStart,
+        scheduleEnd
       })
     } catch (e) { console.error(e) }
     finally { setLoading(false) }
@@ -208,11 +181,11 @@ export default function Dashboard() {
   }
 
   // Get start of current week (Monday)
-  const now = new Date()
-  const dayOfWeek = now.getDay()
+  const weekNow = new Date()
+  const dayOfWeek = weekNow.getDay()
   const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek
-  const weekStart = new Date(now)
-  weekStart.setDate(now.getDate() + mondayOffset)
+  const weekStart = new Date(weekNow)
+  weekStart.setDate(weekNow.getDate() + mondayOffset)
   weekStart.setHours(0,0,0,0)
 
   const weekDays = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun']
@@ -223,13 +196,22 @@ export default function Dashboard() {
     dayEnd.setDate(dayStart.getDate() + 1)
     
     const daySessions = allSessions.filter(s => new Date(s.startTime) >= dayStart && new Date(s.startTime) < dayEnd)
-    const duration = daySessions.filter(s => s.status === 'COMPLETED').reduce((acc, s) => acc + (s.duration || 0), 0) / 3600
-    const breaks = daySessions.reduce((acc, s) => acc + (s.breaks?.length || 0), 0)
-    const score = breaks === 0 && duration > 0 ? '∞' : (duration / Math.max(breaks, 1))
     
-    return { hours: duration, score: score === '∞' ? '∞' : parseFloat(score.toFixed(1)) }
+    let durationSeconds = daySessions.filter(s => s.status === 'COMPLETED').reduce((acc, s) => acc + (s.duration || 0), 0)
+    // Add active session if it's today
+    if (activeSession && new Date(activeSession.startTime) >= dayStart && new Date(activeSession.startTime) < dayEnd) {
+      durationSeconds += sessionTimer
+    }
+    
+    const hours = durationSeconds / 3600
+    
+    let breaks = daySessions.reduce((acc, s) => acc + (s.breaks?.length || 0), 0)
+    if (dayStart.toDateString() === new Date().toDateString()) {
+      breaks = stats.breaksToday
+    }
+
+    return { hours, durationSeconds, breaks }
   })
-  const maxWeek = Math.max(...weekData.map(d => d.hours), 1)
 
   return (
     <div className="dashboard fade-up">
@@ -277,8 +259,36 @@ export default function Dashboard() {
         <div className="dash-left">
           <div className="card dash-core-card">
             <h3 className="dash-card-title">Core Metric</h3>
-            <div className="dash-donut-wrap">
-              <canvas ref={canvasRef} style={{ width: 240, height: 240 }} />
+            <div className="dash-donut-wrap" style={{ position: 'relative', width: 240, height: 240 }}>
+              <svg width="240" height="240" viewBox="0 0 240 240" style={{ transform: 'rotate(-90deg)' }}>
+                {/* Background ring */}
+                <circle cx="120" cy="120" r={radius} fill="none" stroke="#1e1e30" strokeWidth="20" />
+                {/* Progress ring */}
+                <circle 
+                  cx="120" 
+                  cy="120" 
+                  r={radius} 
+                  fill="none" 
+                  stroke="#e6c27a" 
+                  strokeWidth="20"
+                  strokeDasharray={circumference}
+                  strokeDashoffset={strokeDashoffset}
+                  strokeLinecap="round"
+                  style={{ transition: 'stroke-dashoffset 1s linear' }}
+                />
+              </svg>
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ fontSize: 12, fontWeight: 500, color: '#4b5563', marginBottom: 4 }}>
+                  Focus Today ({Math.round(pct)}%)
+                </span>
+                {isDone ? (
+                  <span style={{ fontSize: 26, fontWeight: 800, color: '#22c55e' }}>Done for today</span>
+                ) : (
+                  <span style={{ fontSize: h2 > 0 ? 26 : 32, fontWeight: 800, color: '#fff' }}>
+                    {timeText}
+                  </span>
+                )}
+              </div>
             </div>
             {/* Legend */}
             <div className="dash-legend">
@@ -297,20 +307,22 @@ export default function Dashboard() {
           <div className="grid-2" style={{ marginTop: 16, gap: 12 }}>
             <div className="card" style={{ textAlign: 'center', padding: '20px 10px' }}>
               <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 8 }}>Daily Schedule</p>
-              <p style={{ fontSize: 24, fontWeight: 900, letterSpacing: '-1px' }}>{Math.round(stats.scheduledHoursPerDay)}h</p>
+              <p style={{ fontSize: 24, fontWeight: 900, letterSpacing: '-1px', fontVariantNumeric: 'tabular-nums' }}>{Math.round(stats.scheduledHoursPerDay)}h</p>
             </div>
             <div className="card" style={{ textAlign: 'center', padding: '20px 10px' }}>
               <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 8 }}>Focus Today</p>
-              <p style={{ fontSize: 24, fontWeight: 900, letterSpacing: '-1px' }}>{formatDuration(stats.todaySeconds)}</p>
+              <p style={{ fontSize: 24, fontWeight: 900, letterSpacing: '-1px', fontVariantNumeric: 'tabular-nums' }}>
+                {formatDuration(stats.todaySeconds + (activeSession ? sessionTimer : 0))}
+              </p>
             </div>
             <div className="card" style={{ textAlign: 'center', padding: '20px 10px' }}>
               <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 8 }}>Breaks Today</p>
-              <p style={{ fontSize: 24, fontWeight: 900, letterSpacing: '-1px' }}>{stats.breaksToday}</p>
+              <p style={{ fontSize: 24, fontWeight: 900, letterSpacing: '-1px', fontVariantNumeric: 'tabular-nums' }}>{stats.breaksToday}</p>
             </div>
             <div className="card" style={{ textAlign: 'center', padding: '20px 10px' }}>
               <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: 8 }}>Focus Score</p>
-              <p style={{ fontSize: 24, fontWeight: 900, color: 'var(--gold)', letterSpacing: '-1px' }}>
-                {stats.breaksToday === 0 && stats.todaySeconds > 0 ? '∞' : (stats.todaySeconds / 3600 / Math.max(stats.breaksToday, 1)).toFixed(1)}
+              <p style={{ fontSize: 24, fontWeight: 900, color: 'var(--gold)', letterSpacing: '-1px', fontVariantNumeric: 'tabular-nums' }}>
+                {stats.breaksToday === 0 ? '∞' : (stats.scheduledHoursPerDay / stats.breaksToday).toFixed(1)}
               </p>
             </div>
           </div>
@@ -322,18 +334,24 @@ export default function Dashboard() {
           <div className="card dash-weekly-card">
             <h3 className="dash-card-title">Weekly Overview</h3>
             <div className="dash-bar-chart">
-              {weekDays.map((d, i) => (
-                <div key={d} className="dash-bar-col">
-                  <span style={{ fontSize: 10, color: 'var(--gold)', fontWeight: 700, marginBottom: 4 }}>{weekData[i].score > 0 ? weekData[i].score : ''}</span>
-                  <div className="dash-bar-track">
-                    <div
-                      className="dash-bar-fill"
-                      style={{ height: `${(weekData[i].hours / maxWeek) * 100}%` }}
-                    />
+              {weekDays.map((d, i) => {
+                const heightPct = Math.min((weekData[i].hours / Math.max(stats.scheduledHoursPerDay, 1)) * 100, 100)
+                
+                return (
+                  <div key={d} className="dash-bar-col">
+                    <div className="dash-bar-tooltip">
+                      {formatDuration(weekData[i].durationSeconds)} focus &middot; {weekData[i].breaks} break{weekData[i].breaks !== 1 ? 's' : ''}
+                    </div>
+                    <div className="dash-bar-track">
+                      <div
+                        className="dash-bar-fill"
+                        style={{ height: `${heightPct}%`, minHeight: weekData[i].durationSeconds > 0 ? '6px' : '3px', opacity: weekData[i].durationSeconds > 0 ? 1 : 0.3 }}
+                      />
+                    </div>
+                    <span className="dash-bar-label">{d}</span>
                   </div>
-                  <span className="dash-bar-label">{d}</span>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
 

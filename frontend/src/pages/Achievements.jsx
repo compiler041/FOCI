@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Trophy, Lock, Award, Star, Crown, Shield, Gem, Medal } from 'lucide-react'
+import { Trophy, Lock } from 'lucide-react'
 import client from '../api/client'
 import PageHeader from '../components/PageHeader'
 
@@ -18,7 +18,10 @@ const TIER_COLORS = {
 export default function Achievements() {
   const [all, setAll] = useState([])
   const [unlocked, setUnlocked] = useState([])
-  const [totalHours, setTotalHours] = useState(0)
+  // Committed seconds (from completed sessions, stored in DB)
+  const [committedSeconds, setCommittedSeconds] = useState(0)
+  // Seconds elapsed in the currently-active session (live ticker)
+  const [liveSeconds, setLiveSeconds] = useState(0)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -26,18 +29,45 @@ export default function Achievements() {
       client.get('/api/achievements'),
       client.get('/api/achievements/me').catch(() => ({ data: { achievements: [] } })),
       client.get('/api/auth/me').catch(() => ({ data: { user: {} } })),
-    ]).then(([ar, ur, me]) => {
+      client.get('/api/sessions?status=ACTIVE&limit=1').catch(() => ({ data: { sessions: [] } })),
+    ]).then(([ar, ur, me, sr]) => {
       setAll(ar.data.achievements || [])
       setUnlocked((ur.data.achievements || []).map(a => a.achievementId || a.id))
-      const secs = me.data?.user?.totalFocusSeconds || 0
-      setTotalHours(parseFloat((secs / 3600).toFixed(2)))
+
+      const committed = me.data?.user?.totalFocusSeconds || 0
+      setCommittedSeconds(committed)
+
+      // If there's an active session, compute how many live seconds it's been running
+      const activeSession = (sr.data.sessions || [])[0]
+      if (activeSession?.startTime) {
+        const elapsed = Math.floor((Date.now() - new Date(activeSession.startTime).getTime()) / 1000)
+        setLiveSeconds(Math.max(0, elapsed))
+      }
     }).catch(console.error).finally(() => setLoading(false))
   }, [])
+
+  // Tick the live session second-by-second
+  useEffect(() => {
+    if (liveSeconds === 0) return
+    const id = setInterval(() => setLiveSeconds(s => s + 1), 1000)
+    return () => clearInterval(id)
+  }, [liveSeconds > 0])
+
+  // Total seconds = committed (from DB) + live ticker (not double-counting; committed is only from COMPLETED sessions)
+  const totalSeconds = committedSeconds + liveSeconds
+  const totalHours = totalSeconds / 3600
+
+  // Header label: decimal hours
+  const totalHoursLabel = totalHours >= 10
+    ? totalHours.toFixed(1)
+    : totalHours.toFixed(2).replace(/\.?0+$/, '') || '0'
+
+  // Per-achievement label: whole hours
+  const floorHours = Math.floor(totalHours)
 
   const count = unlocked.length
   const total = all.length
 
-  // Sort by hours threshold
   const sorted = [...all].sort((a, b) => {
     const ha = TIER_COLORS[a.condition]?.hours || 0
     const hb = TIER_COLORS[b.condition]?.hours || 0
@@ -48,34 +78,41 @@ export default function Achievements() {
     <div className="fade-up">
       <PageHeader title="Achievements" subtitle={`${count} / ${total} unlocked`} />
 
-      {/* Overall stats */}
-      <div className="card" style={{ marginBottom: 24, display: 'flex', alignItems: 'center', gap: 24 }}>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-            <span style={{ fontSize: 14, fontWeight: 600 }}>Your Focus Journey</span>
-            <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--gold)' }}>{totalHours} hrs total</span>
-          </div>
-          <div style={{ height: 8, background: 'var(--border)', borderRadius: 99, overflow: 'hidden' }}>
-            <div style={{
-              height: '100%', borderRadius: 99,
-              background: 'linear-gradient(90deg, #CD7F32, #FFD700, #B9F2FF)',
-              width: `${Math.min((totalHours / 1000) * 100, 100)}%`,
-              transition: 'width 1s ease',
-            }} />
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontSize: 11, color: 'var(--text-muted)' }}>
-            <span>0 hrs</span>
-            <span>1,000 hrs</span>
-          </div>
+      {/* Overall journey bar */}
+      <div className="card" style={{ marginBottom: 24 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 10 }}>
+          <span style={{ fontSize: 14, fontWeight: 600 }}>Your Focus Journey</span>
+          <span style={{
+            fontSize: 14, fontWeight: 800, color: 'var(--gold)',
+            fontVariantNumeric: 'tabular-nums',
+          }}>
+            {totalHoursLabel} hrs total
+          </span>
+        </div>
+        <div style={{ height: 8, background: 'var(--border)', borderRadius: 99, overflow: 'hidden' }}>
+          <div style={{
+            height: '100%',
+            borderRadius: 99,
+            background: 'linear-gradient(90deg, #CD7F32, #FFD700, #B9F2FF)',
+            width: `${Math.min((totalHours / 1000) * 100, 100)}%`,
+            transition: 'width 1s ease',
+          }} />
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontSize: 11, color: 'var(--text-muted)' }}>
+          <span>0 hrs</span>
+          <span>1,000 hrs</span>
         </div>
       </div>
 
       {loading ? (
-        <div style={{ display: 'flex', justifyContent: 'center', padding: 48 }}><div className="spinner" /></div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, padding: 64 }}>
+          <div className="spinner" style={{ width: 28, height: 28 }} />
+          <p style={{ color: 'var(--text-muted)', fontSize: 13 }}>Loading achievements…</p>
+        </div>
       ) : sorted.length === 0 ? (
         <div className="empty-state">
           <div style={{ marginBottom: 16 }}><Trophy size={48} color="var(--text-muted)" /></div>
-          <h3>Achievements loading...</h3>
+          <h3>No achievements yet</h3>
           <p>Your milestones will appear here as you focus more</p>
         </div>
       ) : (
@@ -86,29 +123,33 @@ export default function Achievements() {
             const progress = Math.min((totalHours / tier.hours) * 100, 100)
 
             return (
-              <div key={a.id} id={`achievement-${a.id}`} className="card" style={{
-                display: 'flex', alignItems: 'center', gap: 20, padding: '20px 24px',
-                opacity: isUnlocked ? 1 : 0.55,
-                border: isUnlocked ? `1px solid ${tier.color}44` : undefined,
-                boxShadow: isUnlocked ? `0 0 20px ${tier.color}15` : 'none',
-                transition: 'all 0.3s',
-              }}>
-                {/* Icon */}
+              <div
+                key={a.id}
+                id={`achievement-${a.id}`}
+                className="card"
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 20, padding: '20px 24px',
+                  opacity: isUnlocked ? 1 : 0.55,
+                  border: isUnlocked ? `1px solid ${tier.color}44` : undefined,
+                  boxShadow: isUnlocked ? `0 0 20px ${tier.color}15` : 'none',
+                  transition: 'all 0.4s ease',
+                }}
+              >
+                {/* Icon circle */}
                 <div style={{
                   width: 52, height: 52, borderRadius: '50%',
                   background: tier.bg,
                   border: `2px solid ${isUnlocked ? tier.color : 'var(--border)'}`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
+                  flexShrink: 0, transition: 'border-color 0.4s ease',
                 }}>
-                  {isUnlocked ? (
-                    <span style={{ fontSize: 24 }}>{a.icon || '🏆'}</span>
-                  ) : (
-                    <Lock size={20} color="var(--text-muted)" />
-                  )}
+                  {isUnlocked
+                    ? <span style={{ fontSize: 24 }}>{a.icon || '🏆'}</span>
+                    : <Lock size={20} color="var(--text-muted)" />
+                  }
                 </div>
 
-                {/* Info */}
+                {/* Name + progress */}
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                     <span style={{ fontSize: 15, fontWeight: 700 }}>{a.name}</span>
@@ -121,23 +162,29 @@ export default function Achievements() {
                   </div>
                   <div style={{ fontSize: 12, color: 'var(--text-sub)', marginBottom: 8 }}>{a.description}</div>
 
-                  {/* Progress bar */}
-                  {!isUnlocked && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                      <div style={{ flex: 1, height: 4, background: 'var(--border)', borderRadius: 99, overflow: 'hidden' }}>
-                        <div style={{
-                          height: '100%', borderRadius: 99, background: tier.color,
-                          width: `${progress}%`, transition: 'width 0.5s ease',
-                        }} />
-                      </div>
-                      <span style={{ fontSize: 11, color: 'var(--text-muted)', fontWeight: 600, whiteSpace: 'nowrap' }}>
-                        {totalHours} / {tier.hours.toLocaleString()} hrs
-                      </span>
+                  {/* Progress bar — shown for all (locked dimmed, unlocked at 100%) */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ flex: 1, height: 4, background: 'var(--border)', borderRadius: 99, overflow: 'hidden' }}>
+                      <div style={{
+                        height: '100%', borderRadius: 99, background: tier.color,
+                        width: `${isUnlocked ? 100 : progress}%`,
+                        transition: 'width 0.8s ease',
+                      }} />
                     </div>
-                  )}
+                    <span style={{
+                      fontSize: 11, color: isUnlocked ? tier.color : 'var(--text-muted)',
+                      fontWeight: 700, whiteSpace: 'nowrap',
+                      fontVariantNumeric: 'tabular-nums',
+                    }}>
+                      {isUnlocked
+                        ? `✓ ${tier.hours.toLocaleString()} hrs`
+                        : `${floorHours} / ${tier.hours.toLocaleString()} hrs`
+                      }
+                    </span>
+                  </div>
                 </div>
 
-                {/* Status */}
+                {/* Status badge */}
                 <div style={{ flexShrink: 0 }}>
                   {isUnlocked ? (
                     <span className="badge badge-gold" style={{ background: `${tier.color}20`, color: tier.color }}>
