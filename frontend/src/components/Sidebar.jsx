@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { BarChart2, Timer, Ban, Calendar, PlaySquare, Zap, Palette, Trophy, Settings } from 'lucide-react'
+import logoImg from '../assets/logo.png'
 
 const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', icon: BarChart2, exact: true },
@@ -21,7 +22,7 @@ export default function Sidebar() {
     <aside className="sidebar">
       {/* Logo */}
       <div className="sidebar-logo">
-        <div className="sidebar-logo-orb" />
+        <img src={logoImg} className="logo-img" alt="FOCI Logo" />
         <span className="sidebar-logo-text">FOCI</span>
       </div>
 

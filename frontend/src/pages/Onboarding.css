@@ -22,22 +22,11 @@
   gap: 14px;
 }
 
-.onboarding-logo-orb {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse 60% 55% at 38% 35%, #f3e5ab 0%, #e6c27a 35%, #d4af37 70%, #1a1a20 100%);
-  box-shadow: 0 0 20px rgba(230,194,122,0.4);
-}
-
 .onboarding-logo-text {
   font-size: 28px;
-  font-weight: 900;
+  font-weight: 800;
   letter-spacing: 0.1em;
-  background: linear-gradient(135deg, #f3e5ab 0%, #d4af37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
 }
 
 .onboarding-card {

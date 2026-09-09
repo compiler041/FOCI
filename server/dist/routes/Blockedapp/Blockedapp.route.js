@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const Blockedapp_handler_1 = require("./Blockedapp.handler");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/', auth_middleware_1.authMiddleware, Blockedapp_handler_1.getBlockedApps);
+router.post('/', auth_middleware_1.authMiddleware, Blockedapp_handler_1.addBlockedApp);
+router.put('/:id', auth_middleware_1.authMiddleware, Blockedapp_handler_1.updateBlockedApp);
+router.delete('/:id', auth_middleware_1.authMiddleware, Blockedapp_handler_1.deleteBlockedApp);
+exports.default = router;

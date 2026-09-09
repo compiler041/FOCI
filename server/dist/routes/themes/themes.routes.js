@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const themes_handler_1 = require("./themes.handler");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/', auth_middleware_1.authMiddleware, themes_handler_1.getAllThemes);
+router.get('/me', auth_middleware_1.authMiddleware, themes_handler_1.getUserTheme);
+router.put('/me', auth_middleware_1.authMiddleware, themes_handler_1.setUserTheme);
+exports.default = router;

@@ -7,46 +7,48 @@
 
 :root {
   /* Colors */
-  --bg:          #0a0a0c;
-  --surface:     #14141a;
-  --card:        #16161e;
-  --border:      #262630;
-  --border-soft: #1e1e26;
+  --bg: #08070d;
+  --surface: #110e1a;
+  --card: #161320;
+  --border: #262238;
+  --border-soft: #1d192b;
 
   /* Accents */
-  --gold:        #e6c27a;
-  --gold-dim:    #c5a165;
-  --gold-glow:   rgba(230, 194, 122, 0.25);
-  --tan:         #d4af37;
-  --tan-glow:    rgba(212, 175, 55, 0.15);
-  --pink:        #f472b6;
+  --gold: #e6c27a;
+  --gold-dim: #c5a165;
+  --gold-glow: rgba(230, 194, 122, 0.25);
+  --tan: #d4af37;
+  --tan-glow: rgba(212, 175, 55, 0.15);
+  --pink: #f472b6;
 
   /* Text */
-  --text:        #ffffff;
-  --text-sub:    #9ca3af;
-  --text-muted:  #52525b;
+  --text: #ffffff;
+  --text-sub: #9ca3af;
+  --text-muted: #52525b;
 
   /* Status */
-  --green:       #22c55e;
-  --red:         #ef4444;
-  --yellow:      #f59e0b;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #f59e0b;
 
   /* Orb / Theme */
-  --orb-core:    #e6c27a;
-  --orb-mid:     #d4af37;
-  --orb-rim:     #ffffff;
+  --orb-core: #e6c27a;
+  --orb-mid: #d4af37;
+  --orb-rim: #ffffff;
 
   /* Layout */
-  --sidebar-w:   260px;
-  --radius:      16px;
-  --radius-sm:   10px;
-  --radius-xs:   6px;
+  --sidebar-w: 260px;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-xs: 6px;
 }
 
 /* ============================================
    RESET
    ============================================ */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -72,10 +74,29 @@ body {
   min-height: 100dvh;
 }
 
-a { text-decoration: none; color: inherit; }
-button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-input, select, textarea { font-family: inherit; }
-img { max-width: 100%; display: block; }
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
 
 /* ============================================
    APP SHELL — Sidebar + Main
@@ -109,23 +130,18 @@ img { max-width: 100%; display: block; }
   margin-bottom: 24px;
 }
 
-.sidebar-logo-orb {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: radial-gradient(ellipse 60% 55% at 38% 35%, #f3e5ab 0%, #e6c27a 35%, #d4af37 70%, #1a1a20 100%);
-  box-shadow: 0 0 12px rgba(124,106,247,0.6), 0 0 24px rgba(124,106,247,0.2);
+.logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
   flex-shrink: 0;
 }
 
 .sidebar-logo-text {
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 19px;
+  font-weight: 800;
   letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
 }
 
 .sidebar-nav {
@@ -150,12 +166,12 @@ img { max-width: 100%; display: block; }
 
 .sidebar-item:hover {
   color: var(--text);
-  background: rgba(124,106,247,0.06);
+  background: rgba(124, 106, 247, 0.06);
 }
 
 .sidebar-item.active {
   color: var(--text);
-  background: rgba(124,106,247,0.12);
+  background: rgba(124, 106, 247, 0.12);
   font-weight: 600;
 }
 
@@ -171,7 +187,9 @@ img { max-width: 100%; display: block; }
   background: var(--gold);
 }
 
-.sidebar-item { position: relative; }
+.sidebar-item {
+  position: relative;
+}
 
 .sidebar-icon {
   width: 20px;
@@ -200,7 +218,7 @@ img { max-width: 100%; display: block; }
 }
 
 .sidebar-user:hover {
-  background: rgba(124,106,247,0.06);
+  background: rgba(124, 106, 247, 0.06);
 }
 
 .sidebar-avatar {
@@ -310,7 +328,8 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 4px 20px var(--gold-glow);
 }
 
-.btn-primary:hover, .btn-primary:active {
+.btn-primary:hover,
+.btn-primary:active {
   background: var(--gold-dim);
   transform: translateY(-1px);
   box-shadow: 0 6px 28px var(--gold-glow);
@@ -322,7 +341,8 @@ img { max-width: 100%; display: block; }
   color: var(--text-sub);
 }
 
-.btn-ghost:hover, .btn-ghost:active {
+.btn-ghost:hover,
+.btn-ghost:active {
   border-color: var(--gold);
   color: var(--text);
 }
@@ -337,7 +357,9 @@ img { max-width: 100%; display: block; }
   background: rgba(239, 68, 68, 0.2);
 }
 
-.btn-block { width: 100%; }
+.btn-block {
+  width: 100%;
+}
 
 .btn:disabled {
   opacity: 0.5;
@@ -381,14 +403,14 @@ img { max-width: 100%; display: block; }
   background: #fff;
   border-radius: 50%;
   transition: transform 0.3s;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-.toggle-wrap input:checked + .toggle-slider {
+.toggle-wrap input:checked+.toggle-slider {
   background: var(--gold);
 }
 
-.toggle-wrap input:checked + .toggle-slider::before {
+.toggle-wrap input:checked+.toggle-slider::before {
   transform: translateX(20px);
 }
 
@@ -412,7 +434,9 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 0 0 3px var(--gold-glow);
 }
 
-.input::placeholder { color: var(--text-muted); }
+.input::placeholder {
+  color: var(--text-muted);
+}
 
 .input-group {
   display: flex;
@@ -440,10 +464,25 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
 }
 
-.badge-gold { background: rgba(124,106,247,0.15); color: var(--gold); }
-.badge-green { background: rgba(34,197,94,0.12); color: var(--green); }
-.badge-red { background: rgba(239,68,68,0.12); color: var(--red); }
-.badge-tan { background: rgba(34,211,238,0.12); color: var(--tan); }
+.badge-gold {
+  background: rgba(124, 106, 247, 0.15);
+  color: var(--gold);
+}
+
+.badge-green {
+  background: rgba(34, 197, 94, 0.12);
+  color: var(--green);
+}
+
+.badge-red {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--red);
+}
+
+.badge-tan {
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--tan);
+}
 
 /* ============================================
    LIST ROWS
@@ -459,7 +498,9 @@ img { max-width: 100%; display: block; }
   gap: 12px;
 }
 
-.list-row + .list-row { margin-top: 8px; }
+.list-row+.list-row {
+  margin-top: 8px;
+}
 
 /* ============================================
    SECTION LABEL
@@ -478,7 +519,9 @@ img { max-width: 100%; display: block; }
    LOADING SPINNER
    ============================================ */
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .spinner {
@@ -518,33 +561,63 @@ img { max-width: 100%; display: block; }
 }
 
 /* ============================================
-   SCROLL AREA
-   ============================================ */
-.scroll-px { /* No padding needed on desktop */ }
-
-/* ============================================
    ANIMATIONS
    ============================================ */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulse-glow {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.6; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
-.fade-up { animation: fadeUp 0.4s ease both; }
-.fade-up-1 { animation: fadeUp 0.4s 0.05s ease both; }
-.fade-up-2 { animation: fadeUp 0.4s 0.1s ease both; }
-.fade-up-3 { animation: fadeUp 0.4s 0.15s ease both; }
-.fade-up-4 { animation: fadeUp 0.4s 0.2s ease both; }
+.fade-up {
+  animation: fadeUp 0.4s ease both;
+}
+
+.fade-up-1 {
+  animation: fadeUp 0.4s 0.05s ease both;
+}
+
+.fade-up-2 {
+  animation: fadeUp 0.4s 0.1s ease both;
+}
+
+.fade-up-3 {
+  animation: fadeUp 0.4s 0.15s ease both;
+}
+
+.fade-up-4 {
+  animation: fadeUp 0.4s 0.2s ease both;
+}
 
 /* ============================================
    GRID UTILITIES (for dashboard)
@@ -573,15 +646,20 @@ img { max-width: 100%; display: block; }
 .drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(10,10,12,0.85);
+  background: rgba(10, 10, 12, 0.85);
   backdrop-filter: blur(12px);
   z-index: 200;
   animation: fadeIn 0.2s ease;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .drawer {
@@ -599,8 +677,13 @@ img { max-width: 100%; display: block; }
 }
 
 @keyframes slideIn {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 .drawer-header {
@@ -648,10 +731,21 @@ img { max-width: 100%; display: block; }
    RESPONSIVE — Tablet
    ============================================ */
 @media (max-width: 1024px) {
-  :root { --sidebar-w: 200px; }
-  .main-content { padding: 24px 28px; }
-  .grid-2 { gap: 12px; }
-  .drawer { width: 360px; }
+  :root {
+    --sidebar-w: 200px;
+  }
+
+  .main-content {
+    padding: 24px 28px;
+  }
+
+  .grid-2 {
+    gap: 12px;
+  }
+
+  .drawer {
+    width: 360px;
+  }
 }
 
 /* ============================================
@@ -671,7 +765,9 @@ img { max-width: 100%; display: block; }
     display: flex !important;
   }
 
-  .grid-2, .grid-3, .grid-4 {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
     grid-template-columns: 1fr;
   }
 

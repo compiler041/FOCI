@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Check, Plus, X, Globe } from 'lucide-react'
 import client from '../api/client'
 import { useAuth } from '../context/AuthContext'
+import logoImg from '../assets/logo.png'
 import './Onboarding.css'
 
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -97,7 +98,7 @@ export default function Onboarding() {
       <div className="onboarding-container fade-up">
         {/* Logo */}
         <div className="onboarding-logo">
-          <div className="onboarding-logo-orb" />
+          <img src={logoImg} className="logo-img" style={{ width: 40, height: 40 }} alt="FOCI Logo" />
           <span className="onboarding-logo-text">FOCI</span>
         </div>
 

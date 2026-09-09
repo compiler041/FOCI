@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const sessions_handler_1 = require("./sessions.handler");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/', auth_middleware_1.authMiddleware, sessions_handler_1.getAllSessions);
+router.post('/start', auth_middleware_1.authMiddleware, sessions_handler_1.startSession);
+router.get('/active', auth_middleware_1.authMiddleware, sessions_handler_1.getActiveSession);
+router.post('/:id/end', auth_middleware_1.authMiddleware, sessions_handler_1.endSession);
+router.patch('/:id/end', auth_middleware_1.authMiddleware, sessions_handler_1.endSession);
+router.post('/:id/break', auth_middleware_1.authMiddleware, sessions_handler_1.takeBreak);
+router.get('/history', auth_middleware_1.authMiddleware, sessions_handler_1.getSessionHistory);
+exports.default = router;

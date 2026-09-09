@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const schedule_handler_1 = require("./schedule.handler");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/', auth_middleware_1.authMiddleware, schedule_handler_1.getSchedules);
+router.post('/', auth_middleware_1.authMiddleware, schedule_handler_1.createSchedule);
+router.put('/:id', auth_middleware_1.authMiddleware, schedule_handler_1.updateSchedule);
+router.delete('/:id', auth_middleware_1.authMiddleware, schedule_handler_1.deleteSchedule);
+exports.default = router;

@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const youtube_handler_1 = require("./youtube.handler");
+const auth_middleware_1 = require("../../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/', auth_middleware_1.authMiddleware, youtube_handler_1.getAllowedList);
+router.post('/', auth_middleware_1.authMiddleware, youtube_handler_1.addToAllowlist);
+router.delete('/:id', auth_middleware_1.authMiddleware, youtube_handler_1.removeFromAllowlist);
+exports.default = router;
